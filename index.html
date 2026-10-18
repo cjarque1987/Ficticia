@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rumb al 27-N | Laboratori Electoral i de Campanya 2026 (4t ESO)</title>
+  <title>Rumb al Novembre 2026 | Laboratori Polític Multinivell (DUA · 4t ESO)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,16 +14,16 @@
   <header class="top-header">
     <div class="container header-inner">
       <div class="brand">
-        <div class="brand-badge">27-N · 2026</div>
+        <div class="brand-badge">NOVEMBRE · 2026</div>
         <div>
-          <h1>Rumb al 27-N: Laboratori Polític</h1>
-          <p class="subtitle">Projecte de Creació de Partits Polítics i Campanya Electoral · Secundària (15 anys)</p>
+          <h1>Laboratori Polític 2026 · Crea el teu Partit</h1>
+          <p class="subtitle">Web multinivell (DUA) sobre partits, coalicions, campanya i jocs electorals (15 anys)</p>
         </div>
       </div>
 
       <div class="header-widgets">
-        <div class="countdown-box" title="Compte enrere cap a les Eleccions Generals del 27 de novembre de 2026">
-          <span class="widget-label">🗳️ Urnes 27 de novembre 2026</span>
+        <div class="countdown-box" title="Compte enrere cap a les Eleccions Generals de Novembre de 2026">
+          <span class="widget-label">🗳️ Eleccions Novembre 2026</span>
           <div id="countdown-display" class="countdown-numbers">Carregant...</div>
         </div>
         <div class="score-box">
@@ -33,193 +33,215 @@
       </div>
     </div>
 
+    <!-- Barra Global de Nivell DUA (Insegur / Segur / Agosarat) -->
+    <div class="dua-bar">
+      <div class="container dua-bar-inner">
+        <div class="dua-label-group">
+          <span class="dua-title">🎚️ Tria el teu nivell (Model DUA):</span>
+          <span id="dua-active-desc" class="dua-desc">Pas a pas, visual i amb pistes d'ajuda</span>
+        </div>
+        <div class="dua-buttons" role="group" aria-label="Selector de nivell multinivell">
+          <button class="dua-btn active" data-dualevel="insegur" onclick="setGlobalDuaLevel('insegur')">
+            🌱 Nivell Insegur <small>(Guiat i visual)</small>
+          </button>
+          <button class="dua-btn" data-dualevel="segur" onclick="setGlobalDuaLevel('segur')">
+            🛡️ Nivell Segur <small>(Autònom)</small>
+          </button>
+          <button class="dua-btn" data-dualevel="agosarat" onclick="setGlobalDuaLevel('agosarat')">
+            🚀 Nivell Agosarat <small>(Expert)</small>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Navegació per Pestanyes -->
     <nav class="main-nav container" aria-label="Seccions del laboratori">
-      <button class="nav-tab active" data-tab="inici">🏠 Inici i Actualitat 2026</button>
-      <button class="nav-tab" data-tab="partits">🎨 Partits, Logos i Campanyes</button>
-      <button class="nav-tab" data-tab="joc-campanya">🎯 Joc: Caçadors de Campanyes</button>
-      <button class="nav-tab" data-tab="simuladors">📊 Llei d'Hondt i Pactòmetre</button>
-      <button class="nav-tab" data-tab="actualitat-jocs">⚡ Trivial 27-N i Fake News</button>
-      <button class="nav-tab" data-tab="diccionari">📖 Diccionari Polític</button>
+      <button class="nav-tab active" data-tab="inici">🏠 1. Guia del Projecte</button>
+      <button class="nav-tab" data-tab="partits">🎨 2. Partits, Coalicions i Logos 2026</button>
+      <button class="nav-tab" data-tab="joc-campanya">🎯 3. Joc de Campanyes i Cartell</button>
+      <button class="nav-tab" data-tab="simuladors">📊 4. Pactòmetre i Llei d'Hondt</button>
+      <button class="nav-tab" data-tab="actualitat-jocs">⚡ 5. Trivial i Fake News</button>
+      <button class="nav-tab" data-tab="diccionari">📖 6. Diccionari Visual</button>
     </nav>
   </header>
 
   <main class="container main-content">
-    <!-- SECCIÓ 1: INICI I CONTEXT 27-N -->
+    <!-- SECCIÓ 1: INICI I GUIA DEL PROJECTE (ADAPTADA DUA) -->
     <section id="tab-inici" class="tab-section active">
       <div class="hero-card">
         <div class="hero-text">
-          <span class="pill-tag">Eleccions Generals a Espanya · 27 de novembre de 2026</span>
-          <h2>Creeu el vostre partit polític i guanyeu la campanya del 27-N!</h2>
+          <span class="pill-tag">Eleccions Generals a Espanya · Novembre de 2026</span>
+          <h2>Creeu el vostre partit polític i prepareu la campanya!</h2>
           <p>
-            El proper <strong>27 de novembre de 2026</strong> se celebren eleccions generals a Espanya per escollir els <strong>350 diputats i diputades del Congrés</strong>. En aquest web trobareu simuladors, jocs i exemples reals de com fan campanya els partits actuals (els seus logotips, colors, eslògans i TikToks) perquè pugueu dissenyar el vostre propi partit polític amb rigor i creativitat.
+            Aquest mes de novembre de 2026 se celebren eleccions generals a Espanya amb un <strong>panorama polític molt mogut i noves coalicions</strong>. Utilitzeu el selector de dalt (<strong>🌱 Insegur, 🛡️ Segur o 🚀 Agosarat</strong>) per adaptar la web i els jocs al vostre ritme!
           </p>
           <div class="hero-actions">
-            <button class="btn btn-primary" onclick="switchTab('partits')">Explorar Logos i Eslògans 2026 →</button>
-            <button class="btn btn-secondary" onclick="switchTab('simuladors')">Obrir Llei d'Hondt i Pactòmetre</button>
+            <button class="btn btn-primary" onclick="switchTab('partits')">Veure els Nous Partits i Logos 2026 →</button>
+            <button class="btn btn-secondary" onclick="switchTab('joc-campanya')">Jugar per Nivells (🌱 / 🛡️ / 🚀)</button>
           </div>
         </div>
-        <div class="hero-roadmap">
-          <h3>📅 Calendari Rumb al 27-N</h3>
-          <ul class="timeline-list">
-            <li>
-              <span class="time-badge">Octubre 2026</span>
-              <div><strong>Precampanya i Programes:</strong> Definició d'ideologia, logotip, eslògan i propostes Estrella.</div>
-            </li>
-            <li>
-              <span class="time-badge">11 - 25 Nov</span>
-              <div><strong>Campanya Electoral (15 dies):</strong> Cartells, mítings, vídeos de xarxes i debats electorals.</div>
-            </li>
-            <li>
-              <span class="time-badge">26 Novembre</span>
-              <div><strong>Jornada de Reflexió:</strong> Prohibit demanar el vot o publicar enquestes.</div>
-            </li>
-            <li class="highlight-step">
-              <span class="time-badge">27 Novembre</span>
-              <div><strong>Dia de les Eleccions (27-N):</strong> Votació, escrutini amb Llei d'Hondt i Pactes d'Investidura!</div>
-            </li>
-          </ul>
+
+        <!-- Guia del projecte segons el nivell DUA escollit -->
+        <div class="hero-roadmap" id="dua-project-guide">
+          <!-- Generat dinàmicament per JS segons el nivell Insegur / Segur / Agosarat -->
         </div>
       </div>
 
-      <!-- Els 6 temes clau del 2026 per a joves de 15 anys -->
+      <!-- Els 6 temes clau del 2026 per a joves de 15 anys (Visual i clar) -->
       <div class="section-block">
         <div class="section-header">
-          <h2>🔥 Què es debat a la campanya del 2026? (Idees per al vostre programa)</h2>
-          <p>Un bon partit polític ha de donar resposta als problemes reals d'avui. Feu clic a cada tema per veure què proposen l'esquerra i la dreta:</p>
+          <h2>🔥 Els 6 temes d'actualitat del 2026 per al vostre programa electoral</h2>
+          <p>Trieu almenys 3 d'aquests temes per explicar què farà el vostre partit:</p>
         </div>
         <div class="issues-grid">
           <article class="issue-card">
             <div class="issue-icon">🏠</div>
-            <h3>1. Habitatge i Emancipació Jove</h3>
-            <p>Els lloguers a les ciutats superen sovint els 1.000 €/mes i els joves no es poden emancipar fins als 30 anys.</p>
+            <h3>1. Habitatge i Lloguers Joves</h3>
+            <p>Els lloguers són molt alts i els joves no poden marxar de casa fins als 30 anys.</p>
             <div class="issue-perspectives">
-              <span class="persp-left"><strong>Esquerra:</strong> Posar topalls al preu del lloguer, limitar pisos turístics i fer pisos públics.</span>
-              <span class="persp-right"><strong>Dreta:</strong> Baixar impostos a la compra, donar avals i construir més habitatge lliure.</span>
+              <span class="persp-left"><strong>Esquerra:</strong> Posar un preu màxim al lloguer, limitar pisos turístics i fer pisos públics.</span>
+              <span class="persp-right"><strong>Dreta:</strong> Baixar impostos a la compra i construir més habitatges nous.</span>
             </div>
           </article>
 
           <article class="issue-card">
             <div class="issue-icon">🤖</div>
-            <h3>2. Educació, IA i pantalles</h3>
-            <p>Com s'ha de regular la Intel·ligència Artificial i el mòbil als instituts? Cal canviar les PAU/Selectivitat?</p>
+            <h3>2. Educació, IA i Mòbils</h3>
+            <p>Com fem servir la Intel·ligència Artificial a l'institut? Com han de ser les beques i la Selectivitat?</p>
             <div class="issue-perspectives">
-              <span class="persp-left"><strong>Esquerra:</strong> Més beques públiques, ràtios més baixes a l'aula i educació digital crítica.</span>
-              <span class="persp-right"><strong>Dreta:</strong> Prova PAU única a tota Espanya, reforç d'exàmens clàssics i llibertat d'elecció de centre.</span>
+              <span class="persp-left"><strong>Esquerra:</strong> Més beques públiques, menys alumnes per classe i escola pública forta.</span>
+              <span class="persp-right"><strong>Dreta:</strong> Prova PAU igual a tota Espanya i llibertat de les famílies per triar escola.</span>
             </div>
           </article>
 
           <article class="issue-card">
             <div class="issue-icon">🌍</div>
-            <h3>3. Emergència Climàtica i Transport</h3>
-            <p>Sequera, onades de calor, Zones de Baixes Emissions i el funcionament de Rodalies i trens.</p>
+            <h3>3. Clima i Transport Públic</h3>
+            <p>Onades de calor, restriccions a cotxes contaminants i retards als trens de Rodalies.</p>
             <div class="issue-perspectives">
-              <span class="persp-left"><strong>Esquerra:</strong> Transport públic gratuït per a joves, energies renovables i impostos verds.</span>
-              <span class="persp-right"><strong>Dreta:</strong> Transició sense prohibir cotxes de combustió ni apujar impostos a pagesos i transportistes.</span>
+              <span class="persp-left"><strong>Esquerra:</strong> Tren i bus gratuït per a joves, energies renovables i menys cotxes.</span>
+              <span class="persp-right"><strong>Dreta:</strong> No prohibir cotxes de benzina/dièsel i baixar impostos a pagesos i transportistes.</span>
             </div>
           </article>
 
           <article class="issue-card">
             <div class="issue-icon">🧠</div>
-            <h3>4. Salut Mental i Sanitat Pública</h3>
-            <p>L'ansietat i els problemes de salut mental entre adolescents de 14-18 anys han crescut molt els últims anys.</p>
+            <h3>4. Salut Mental Jove</h3>
+            <p>L'ansietat i el malestar emocional entre joves de 15 anys necessiten resposta ràpida.</p>
             <div class="issue-perspectives">
-              <span class="persp-left"><strong>Esquerra:</strong> Psicòlegs gratuïts a la sanitat pública i als instituts sense llistes d'espera.</span>
-              <span class="persp-right"><strong>Dreta:</strong> Col·laboració públic-privada per reduir llistes d'espera i prevenció familiar.</span>
+              <span class="persp-left"><strong>Esquerra:</strong> Més psicòlegs gratuïts a la sanitat pública i als instituts.</span>
+              <span class="persp-right"><strong>Dreta:</strong> Concertar visites amb clíniques per eliminar llistes d'espera i suport familiar.</span>
             </div>
           </article>
 
           <article class="issue-card">
             <div class="issue-icon">💼</div>
-            <h3>5. Feina Jove, Salaris i Jornada</h3>
-            <p>El debat del 2026: s'ha de reduir la jornada laboral a 37,5 o 35 hores setmanals sense baixar el sou?</p>
+            <h3>5. Jornada Laboral i Salaris</h3>
+            <p>Cal reduir la jornada de treball a 35 o 37,5 hores a la setmana sense baixar el sou?</p>
             <div class="issue-perspectives">
-              <span class="persp-left"><strong>Esquerra:</strong> Pujada del Salari Mínim (SMI), prohibició de becaris sense sou i jornada de 35-37,5h.</span>
-              <span class="persp-right"><strong>Dreta:</strong> Menys cotitzacions i impostos a les empreses perquè contractin més joves.</span>
+              <span class="persp-left"><strong>Esquerra:</strong> Reduir la jornada a 35-37,5h i apujar el Salari Mínim (SMI).</span>
+              <span class="persp-right"><strong>Dreta:</strong> Baixar impostos a les empreses perquè puguin crear més llocs de treball.</span>
             </div>
           </article>
 
           <article class="issue-card">
             <div class="issue-icon">🏛️</div>
-            <h3>6. Model Territorial i Finançament</h3>
-            <p>Com es reparteixen els impostos i les competències entre l'Estat central i les Comunitats Autònomes?</p>
+            <h3>6. Catalunya i Model d'Estat</h3>
+            <p>Qui ha de gestionar els impostos, els trens de Rodalies i les competències?</p>
             <div class="issue-perspectives">
-              <span class="persp-left"><strong>Sobiranistes/Federalistes:</strong> Finançament singular, traspàs de Rodalies i reconeixement plurinacional.</span>
-              <span class="persp-right"><strong>Centralistes/Unionistes:</strong> Igualtat fiscal entre territoris i reforç de les competències de l'Estat.</span>
+              <span class="persp-left"><strong>Sobiranistes/Federalistes:</strong> Finançament propi, traspàs de Rodalies i plurinacionalitat.</span>
+              <span class="persp-right"><strong>Centralistes:</strong> Que l'Estat central concentri més competències i igualtat fiscal.</span>
             </div>
           </article>
         </div>
       </div>
-
-      <!-- Checklist del Projecte -->
-      <div class="section-block checklist-banner">
-        <h3>📋 Guia ràpida: Els 5 passos que ha de tenir el vostre Partit Polític</h3>
-        <div class="steps-row">
-          <div class="step-pill"><span>1</span> <strong>Nom i Sigles</strong> fàcils de recordar</div>
-          <div class="step-pill"><span>2</span> <strong>Logotip i Color</strong> amb significat polític</div>
-          <div class="step-pill"><span>3</span> <strong>Eslògan 2026</strong> curt i directe (màx. 6 paraules)</div>
-          <div class="step-pill"><span>4</span> <strong>Ubicació Ideològica</strong> i públic objectiu</div>
-          <div class="step-pill"><span>5</span> <strong>Programa i Campanya</strong> (cartell, vídeo i debat)</div>
-        </div>
-      </div>
     </section>
 
-    <!-- SECCIÓ 2: RADIOGRAFIA DELS PARTITS I CAMPANYES 2026 -->
+    <!-- SECCIÓ 2: PARTITS, COALICIONS I LOGOS 2026 (ACTUALITZADA!) -->
     <section id="tab-partits" class="tab-section">
       <div class="section-header">
-        <h2>🎨 Com són i com fan campanya els partits polítics actuals (2026)</h2>
-        <p>Analitzeu els logotips, la psicologia del color, els eslògans i l'estratègia a les xarxes socials dels partits espanyols per inspirar-vos en la vostra pròpia campanya.</p>
+        <h2>🎨 Els Partits, Nous Agrupaments i Logos (Novembre 2026)</h2>
+        <p>El mapa polític s'ha reorganitzat abans de les eleccions! Mireu com s'han agrupat els partits i feu clic a qualsevol logotip per veure els seus eslògans, colors i campanya al vostre nivell DUA.</p>
+      </div>
+
+      <!-- Resum Visual dels Nous Agrupaments 2026 -->
+      <div class="coalitions-2026-banner card-panel">
+        <h3>🔄 Què ha canviat en els agrupaments de partits per a aquestes eleccions del 2026?</h3>
+        <div class="coalitions-grid-3">
+          <div class="coalition-box coal-left">
+            <span class="coal-tag">1. Reorganització de l'Esquerra</span>
+            <h4>➕ Frente Amplio vs. 🟣 Podem (+ ERC)</h4>
+            <p>No hi ha hagut acord únic a l'esquerra del PSOE:</p>
+            <ul>
+              <li><strong>Frente Amplio:</strong> Uneix <em>Sumar, IU, Más Madrid i els Comuns</em> (amb Ada Colau).</li>
+              <li><strong>Podemos:</strong> Es presenta en solitari a gran part d'Espanya, però a <strong>Catalunya fa un pacte històric amb ERC</strong> (integrant-se a la llista de Gabriel Rufián) i a València amb Compromís.</li>
+            </ul>
+          </div>
+
+          <div class="coalition-box coal-right">
+            <span class="coal-tag">2. Pugna a la Dreta</span>
+            <h4>🔵 PP, 🟢 Vox i l'entrada de 🐿️ SALF</h4>
+            <p>Tres paperetes competeixen a la dreta:</p>
+            <ul>
+              <li><strong>PP (Feijóo):</strong> Es presenta amb les seves sigles (+ acord amb UPN a Navarra) demanant el vot útil.</li>
+              <li><strong>Vox (Abascal):</strong> Manté la seva candidatura pròpia.</li>
+              <li><strong>SALF (Alvise Pérez):</strong> El partit de l'esquirol es presenta a les generals i disputa el vot antisistema a Vox.</li>
+            </ul>
+          </div>
+
+          <div class="coalition-box coal-terr">
+            <span class="coal-tag">3. Partits Catalans, Bascos i Senat</span>
+            <h4>🟡 ERC+Podem, 🩵 Junts i «Senat de Progrés»</h4>
+            <p>Pactes clau segons el territori i la cambra:</p>
+            <ul>
+              <li><strong>A Catalunya:</strong> Competeixen el PSC, la nova aliança <strong>ERC+Podem</strong>, <strong>Junts</strong> i els <strong>Comuns (Frente Amplio)</strong>.</li>
+              <li><strong>Al Senat:</strong> El PSOE, Frente Amplio i esquerres s'uneixen en la llista <strong>«Senat de Progrés»</strong> per frenar la majoria del PP.</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <!-- Eix Ideològic Interactiu -->
       <div class="card-panel axis-panel">
-        <h3>🧭 Mapa Ideològic del Congrés (Eix Esquerra - Dreta)</h3>
-        <p class="small-muted">Feu clic sobre qualsevol partit de l'eix o de la graella inferior per analitzar la seva campanya, logotip i eslògans:</p>
+        <h3>🧭 Mapa Ideològic (Eix Esquerra - Dreta) · Clica un partit</h3>
         <div class="political-spectrum" id="spectrum-bar">
           <div class="spectrum-labels">
-            <span>⬅️ Esquerra transformadora</span>
+            <span>⬅️ Esquerra alternativa</span>
             <span>Centreesquerra</span>
             <span>Centre</span>
             <span>Centredreta</span>
-            <span>Dreta radical ➡️</span>
+            <span>Dreta radical / Antisistema ➡️</span>
           </div>
-          <div class="spectrum-track" id="spectrum-track">
-            <!-- Generat dinàmicament per JS -->
-          </div>
+          <div class="spectrum-track" id="spectrum-track"></div>
         </div>
       </div>
 
       <!-- Selector de partits i fitxa detallada -->
       <div class="parties-Comparison-layout">
-        <div class="parties-selector-grid" id="parties-grid">
-          <!-- Targetes dels partits generades per JS -->
-        </div>
-
-        <div class="party-detail-card" id="party-detail-view">
-          <!-- Detall del partit seleccionat -->
-        </div>
+        <div class="parties-selector-grid" id="parties-grid"></div>
+        <div class="party-detail-card" id="party-detail-view"></div>
       </div>
     </section>
 
-    <!-- SECCIÓ 3: JOC CAÇADORS DE CAMPANYES + LABORATORI D'ESLÒGANS -->
+    <!-- SECCIÓ 3: JOC DE CAMPANYES MULTINIVELL + SIMULADOR DE CARTELL -->
     <section id="tab-joc-campanya" class="tab-section">
       <div class="section-header">
-        <h2>🎯 Joc: Caçadors de Campanyes (Eslògans, Logos i Xarxes Socials)</h2>
-        <p>Demostreu que sabeu analitzar com ens convencen els partits polítics a través dels seus eslògans, símbols, colors i vídeos de TikTok/Instagram!</p>
+        <h2>🎯 Joc Multinivell: Caçadors de Campanyes, Logos i Coalicions</h2>
+        <p>Trieu el vostre nivell de dificultat (<strong>🌱 Insegur, 🛡️ Segur o 🚀 Agosarat</strong>) per practicar com són els logotips, els eslògans i les noves coalicions del 2026:</p>
       </div>
 
-      <!-- Filtres del joc de campanya -->
+      <!-- Botons de Nivell DUA per al Joc de Campanyes -->
       <div class="game-mode-bar">
-        <button class="mode-btn active" data-campmode="all">🌟 Tots els reptes (12)</button>
-        <button class="mode-btn" data-campmode="eslogans">💬 Endevina l'Eslògan</button>
-        <button class="mode-btn" data-campmode="logos">🎨 Logos i Psicologia del Color</button>
-        <button class="mode-btn" data-campmode="xarxes">📱 TikToks i Estratègia 2026</button>
+        <button class="mode-btn active" data-campmode="insegur">🌱 Nivell Insegur (Logos i lemes bàsics)</button>
+        <button class="mode-btn" data-campmode="segur">🛡️ Nivell Segur (Coalicions 2026 i TikTok)</button>
+        <button class="mode-btn" data-campmode="agosarat">🚀 Nivell Agosarat (Estratègia i Llei d'Hondt)</button>
+        <button class="mode-btn" data-campmode="all">🌟 Tots els nivells (12 reptes)</button>
       </div>
 
       <div class="game-container card-panel" id="campaign-game-card">
         <div class="game-top-bar">
-          <span id="camp-badge" class="pill-tag">Eslògan de Campanya</span>
-          <span id="camp-progress" class="progress-text">Repte 1 de 12</span>
+          <span id="camp-badge" class="pill-tag">🌱 Nivell Insegur</span>
+          <span id="camp-progress" class="progress-text">Repte 1 de 4</span>
         </div>
         <h3 id="camp-question" class="game-question-title">Carregant pregunta...</h3>
         <div id="camp-hint" class="visual-hint-box"></div>
@@ -230,37 +252,38 @@
         </div>
       </div>
 
-      <!-- Mini-Simulador Creatiu: Provador de Cartell, Logo i Eslògan per al grup -->
+      <!-- Simulador Creatiu: Provador de Cartell, Logo i Eslògan per al grup -->
       <div class="card-panel poster-lab-panel">
         <div class="section-header">
-          <h3>✨ Simulador de Cartell i Identitat Visual per al vostre Partit</h3>
-          <p>Proveu diferents combinacions de colors, símbols, eslògans i enfocament de campanya per veure com quedaria el cartell del vostre grup per al 27-N i quin diagnòstic d'impacte obtindríeu:</p>
+          <h3>✨ Creador de Cartell, Logotip i Eslògan per al vostre Partit</h3>
+          <p>Proveu com queda el cartell electoral del vostre grup i rebeu consells automàtics sobre el color i l'eslògan:</p>
         </div>
 
         <div class="poster-lab-grid">
           <div class="poster-controls">
             <div class="form-group">
-              <label for="lab-party-name">Nom i Sigles del vostre Partit:</label>
+              <label for="lab-party-name">1. Nom i Sigles del vostre Partit:</label>
               <input type="text" id="lab-party-name" value="FUTUR JOVE (FJ)" maxlength="32" />
             </div>
             <div class="form-group">
-              <label for="lab-slogan">Eslògan de Campanya (27-N):</label>
-              <input type="text" id="lab-slogan" value="El nostre futur es decideix avui" maxlength="65" />
+              <label for="lab-slogan">2. Eslògan de Campanya (recomanat: 3 a 6 paraules):</label>
+              <input type="text" id="lab-slogan" value="El nostre futur comença avui" maxlength="65" />
             </div>
             <div class="form-row-2">
               <div class="form-group">
-                <label for="lab-color">Color Corporatiu:</label>
+                <label for="lab-color">3. Color del Partit:</label>
                 <select id="lab-color">
                   <option value="#E30613" data-psych="Vermell: Transmet passió, urgència social, igualtat i mobilització.">🔴 Vermell Social / Energia</option>
-                  <option value="#005999" data-psych="Blau: Transmet estabilitat, confiança, ordre i gestió institucional.">🔵 Blau Institucional / Ordre</option>
-                  <option value="#00A86B" data-psych="Verd Esmeralda: Connecta amb l'ecologisme, la sostenibilitat i l'esperança.">🟢 Verd Ecologista / Clima</option>
-                  <option value="#7C4DFF" data-psych="Violeta / Morat: Transmet renovació juvenil, feminisme i transformació.">🟣 Violeta Innovació / Feminisme</option>
-                  <option value="#FF8F00" data-psych="Taronja / Àmbar: Transmet proximitat, dinamisme ciutadà i modernitat.">🟠 Taronja / Groc Ciutadà</option>
-                  <option value="#00ACC1" data-psych="Turquesa: Color modern i transversal que trenca amb els blocs clàssics.">🩵 Turquesa Transversal / Jove</option>
+                  <option value="#005999" data-psych="Blau: Transmet estabilitat, confiança, ordre i gestió.">🔵 Blau Institucional / Ordre</option>
+                  <option value="#00A86B" data-psych="Verd Esmeralda: Connecta amb l'ecologisme, la natura i l'esperança.">🟢 Verd Ecologista / Clima</option>
+                  <option value="#7C4DFF" data-psych="Violeta / Morat: Transmet renovació juvenil, feminisme i canvi.">🟣 Violeta Innovació / Feminisme</option>
+                  <option value="#E51C55" data-psych="Magenta / Coral: Color fresc, modern i associat a moviments socials.">🩷 Magenta / Coral Modern</option>
+                  <option value="#FF8F00" data-psych="Taronja / Groc: Transmet proximitat, optimisme i visibilitat immediata.">🟠 Taronja / Groc Ciutadà</option>
+                  <option value="#00ACC1" data-psych="Turquesa: Color jove i transversal que es desmarca dels partits clàssics.">🩵 Turquesa Transversal</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="lab-symbol">Símbol del Logotip:</label>
+                <label for="lab-symbol">4. Símbol del Logotip:</label>
                 <select id="lab-symbol">
                   <option value="🌱">🌱 Brot verd (Sostenibilitat i futur)</option>
                   <option value="⚡">⚡ Raig (Canvi ràpid i energia jove)</option>
@@ -268,63 +291,74 @@
                   <option value="🚀">🚀 Coet (Ciència, IA i progrés)</option>
                   <option value="⚖️">⚖️ Balança (Justícia i igualtat)</option>
                   <option value="🕊️">🕊️ Ocell en vol (Llibertat i horitzó)</option>
+                  <option value="➕">➕ Signe Suma (Coalició i unió)</option>
                   <option value="⭐">⭐ Estrella (Lideratge i sobirania)</option>
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="lab-proposal">Proposta Estrella al Cartell:</label>
+              <label for="lab-proposal">5. Proposta Estrella destacada al Cartell:</label>
               <input type="text" id="lab-proposal" value="Lloguer jove màxim 400€ i transport 100% gratuït" maxlength="75" />
             </div>
           </div>
 
           <div class="poster-preview-wrapper">
             <div class="campaign-poster" id="poster-preview">
-              <div class="poster-top-date">ELECCIONS GENERALS · 27 DE NOVEMBRE 2026</div>
+              <div class="poster-top-date">ELECCIONS GENERALS · NOVEMBRE 2026</div>
               <div class="poster-logo-circle" id="poster-symbol">🌱</div>
               <div class="poster-party-title" id="poster-title">FUTUR JOVE (FJ)</div>
-              <div class="poster-slogan-text" id="poster-slogan">«El nostre futur es decideix avui»</div>
+              <div class="poster-slogan-text" id="poster-slogan">«El nostre futur comença avui»</div>
               <div class="poster-proposal-pill" id="poster-proposal">✅ Lloguer jove màxim 400€ i transport 100% gratuït</div>
-              <div class="poster-footer-cta">VOTA EL 27-N · #Campanya2026</div>
+              <div class="poster-footer-cta">VOTA EL FUTUR · #Campanya2026</div>
             </div>
-            <div class="poster-analysis-box" id="poster-analysis">
-              <!-- Diagnòstic psicològic del cartell -->
-            </div>
+            <div class="poster-analysis-box" id="poster-analysis"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECCIÓ 4: SIMULADORS (LLEI D'HONDT I PACTÒMETRE 350 ESCONS) -->
+    <!-- SECCIÓ 4: SIMULADORS (PACTÒMETRE I LLEI D'HONDT AMB REPTES DUA) -->
     <section id="tab-simuladors" class="tab-section">
       <div class="section-header">
-        <h2>📊 Simuladors Electorals: Llei d'Hondt i Pactòmetre del 27-N</h2>
-        <p>Com es transformen els vots en escons i com s'escull el President o Presidenta del Govern d'Espanya? Experimenteu amb dades reals i amb els partits de la vostra classe!</p>
+        <h2>📊 Simuladors 2026: Pactòmetre i Calculadora de la Llei d'Hondt</h2>
+        <p>Experimenteu amb els nous partits del 2026 (<em>Frente Amplio, Podem, ERC+Podem, SALF...</em>) i amb els partits de la vostra classe!</p>
+      </div>
+
+      <!-- Reptes guiats segons el nivell DUA -->
+      <div class="dua-missions-row">
+        <div class="mission-card mission-insegur">
+          <strong>🌱 Repte Nivell Insegur:</strong>
+          <p>Al Pactòmetre, feu clic a <strong>SÍ</strong> en diversos partits fins a superar els <strong>176 escons</strong> (majoria absoluta) sense barrejar partits incompatibles!</p>
+        </div>
+        <div class="mission-card mission-segur">
+          <strong>🛡️ Repte Nivell Segur:</strong>
+          <p>Aconseguiu aprovar una investidura en <strong>2a volta (Majoria Simple)</strong>: menys de 176 SÍ, però més SÍ que NO gràcies a les abstencions.</p>
+        </div>
+        <div class="mission-card mission-agosarat">
+          <strong>🚀 Repte Nivell Agosarat:</strong>
+          <p>Obriu la <strong>Llei d'Hondt</strong> a <em>Madrid</em> o <em>Barcelona</em> i comproveu quants escons guanyarien si suméssiu els vots de <em>Frente Amplio + Podem</em> o de <em>Vox + SALF</em>!</p>
+        </div>
       </div>
 
       <!-- Sub-navegació de simuladors -->
       <div class="sub-tabs">
-        <button class="sub-tab-btn active" onclick="switchSimulator('pactometre')">🏛️ Pactòmetre i Hemicicle (350 escons)</button>
-        <button class="sub-tab-btn" onclick="switchSimulator('dhondt')">🧮 Calculadora de la Llei d'Hondt</button>
+        <button class="sub-tab-btn active" onclick="switchSimulator('pactometre')">🏛️ 1. Pactòmetre d'Investidura (350 escons)</button>
+        <button class="sub-tab-btn" onclick="switchSimulator('dhondt')">🧮 2. Calculadora de la Llei d'Hondt</button>
       </div>
 
       <!-- SIMULADOR A: PACTÒMETRE I INVESTIDURA -->
       <div id="sim-pactometre" class="sim-panel active card-panel">
         <div class="pacto-header">
           <div>
-            <h3>🏛️ Pactòmetre d'Investidura (Congrés dels Diputats: 350 Escons)</h3>
-            <p>Feu clic als botons <strong>SÍ</strong>, <strong>ABSTENCIÓ</strong> o <strong>NO</strong> de cada partit (o editeu els seus escons si voleu simular un altre resultat el 27-N) per veure si s'aconsegueix investir President/a del Govern:</p>
+            <h3>🏛️ Pactòmetre del Congrés (350 Escons · Novembre 2026)</h3>
+            <p>Cliqueu <strong>SÍ</strong>, <strong>ABST</strong> o <strong>NO</strong> a cada partit per simular la votació d'investidura:</p>
           </div>
           <button class="btn btn-secondary btn-sm" id="reset-pacto-btn">🔄 Reiniciar Pactes</button>
         </div>
 
         <div class="pacto-layout">
-          <!-- Columna esquerra: Llista de partits per pactar -->
-          <div class="pacto-parties-list" id="pacto-parties-list">
-            <!-- Generat per JS -->
-          </div>
+          <div class="pacto-parties-list" id="pacto-parties-list"></div>
 
-          <!-- Columna dreta: Hemicicle i Resultat de 1a i 2a volta -->
           <div class="pacto-results-panel">
             <div class="hemicycle-box">
               <svg id="hemicycle-svg" viewBox="0 0 400 220" class="hemicycle-svg"></svg>
@@ -346,9 +380,7 @@
               </div>
             </div>
 
-            <div class="investidura-verdict" id="investidura-verdict">
-              <!-- Veredicte de 1a i 2a votació -->
-            </div>
+            <div class="investidura-verdict" id="investidura-verdict"></div>
           </div>
         </div>
       </div>
@@ -357,22 +389,21 @@
       <div id="sim-dhondt" class="sim-panel card-panel hidden">
         <div class="dhondt-top-controls">
           <div class="form-group">
-            <label for="dhondt-preset">Escolliu una circumscripció o el Mode Eleccions d'Aula:</label>
+            <label for="dhondt-preset">Escolliu l'escenari (Aula o Circumscripcions 2026):</label>
             <select id="dhondt-preset">
-              <option value="barcelona">📍 Barcelona (Circumscripció gran - 32 escons)</option>
-              <option value="madrid">📍 Madrid (Circumscripció més gran - 37 escons)</option>
-              <option value="lleida">📍 Lleida (Circumscripció petita - 4 escons)</option>
-              <option value="soria">📍 Sòria (Circumscripció mínima - 2 escons)</option>
-              <option value="aula">🏫 Simulació Eleccions d'Aula (5 grups de classe - 10 escons)</option>
+              <option value="aula">🏫 Eleccions d'Aula a l'Institut (10 escons · 🌱 Ideal per començar)</option>
+              <option value="barcelona">📍 Barcelona 2026 (32 escons · 🛡️ Pacte ERC+Podem vs. Frente Amplio)</option>
+              <option value="madrid">📍 Madrid 2026 (37 escons · 🚀 Frente Amplio vs. Podem i Vox vs. SALF)</option>
+              <option value="lleida">📍 Lleida 2026 (4 escons · 🚀 Província petita i Vot Útil)</option>
             </select>
           </div>
           <div class="form-group">
             <label for="dhondt-seats">Escons a repartir:</label>
-            <input type="number" id="dhondt-seats" min="1" max="50" value="32" />
+            <input type="number" id="dhondt-seats" min="1" max="50" value="10" />
           </div>
           <div class="form-group">
             <label for="dhondt-blank">Vots en blanc:</label>
-            <input type="number" id="dhondt-blank" min="0" step="100" value="24000" />
+            <input type="number" id="dhondt-blank" min="0" step="10" value="10" />
           </div>
         </div>
 
@@ -380,15 +411,15 @@
 
         <div class="dhondt-layout">
           <div class="dhondt-inputs-card">
-            <h4>🗳️ Vots per Candidatura (podeu editar noms i vots)</h4>
+            <h4>🗳️ Vots de cada partit (podeu canviar els números!)</h4>
             <div id="dhondt-party-inputs"></div>
           </div>
 
           <div class="dhondt-results-card">
-            <h4>🏅 Resultat del Repartiment d'Escons</h4>
+            <h4>🏅 Escons que obté cada partit</h4>
             <div id="dhondt-summary-bars" class="dhondt-bars"></div>
-            <details class="dhondt-table-details" open>
-              <summary>🔍 Veure la taula matemàtica de divisions de D'Hondt (pas a pas)</summary>
+            <details class="dhondt-table-details">
+              <summary>🔍 Obrir la taula de divisions matemàtiques (÷1, ÷2, ÷3...)</summary>
               <div class="table-scroll" id="dhondt-matrix-container"></div>
             </details>
           </div>
@@ -396,21 +427,29 @@
       </div>
     </section>
 
-    <!-- SECCIÓ 5: TRIVIAL 27-N + DETECTOR DE FAKE NEWS I FAL·LÀCIES -->
+    <!-- SECCIÓ 5: TRIVIAL I DETECTOR DE FAKE NEWS (MULTINIVELL DUA) -->
     <section id="tab-actualitat-jocs" class="tab-section">
       <div class="section-header">
-        <h2>⚡ Reptes d'Actualitat 2026: Trivial Electoral i Detector de Manipulació</h2>
-        <p>Entreneu-vos per al gran debat electoral de classe! Apreneu com funcionen les eleccions i com detectar fal·làcies, promeses demagògiques i fake news.</p>
+        <h2>⚡ Jocs d'Actualitat Multinivell: Trivial Electoral i Detector de Debats</h2>
+        <p>Filtreu les preguntes segons el vostre nivell (<strong>🌱 Insegur, 🛡️ Segur o 🚀 Agosarat</strong>):</p>
+      </div>
+
+      <!-- Filtre de nivell per als 2 jocs d'actualitat -->
+      <div class="game-mode-bar" id="act-level-bar">
+        <button class="mode-btn active" data-actlevel="insegur" onclick="setActualitatLevel('insegur')">🌱 Nivell Insegur</button>
+        <button class="mode-btn" data-actlevel="segur" onclick="setActualitatLevel('segur')">🛡️ Nivell Segur</button>
+        <button class="mode-btn" data-actlevel="agosarat" onclick="setActualitatLevel('agosarat')">🚀 Nivell Agosarat</button>
+        <button class="mode-btn" data-actlevel="all" onclick="setActualitatLevel('all')">🌟 Tots els nivells</button>
       </div>
 
       <div class="dual-games-grid">
-        <!-- Joc A: Trivial 27-N -->
+        <!-- Joc A: Trivial -->
         <div class="card-panel">
           <div class="game-top-bar">
-            <span class="pill-tag" id="triv-category">Sistema Electoral</span>
-            <span class="progress-text" id="triv-progress">Pregunta 1 / 8</span>
+            <span class="pill-tag" id="triv-category">🌱 Nivell Insegur</span>
+            <span class="progress-text" id="triv-progress">Pregunta 1</span>
           </div>
-          <h3>🧠 Trivial Electoral 27-N</h3>
+          <h3>🧠 Trivial de les Eleccions</h3>
           <p id="triv-question" class="game-question-title">Carregant...</p>
           <div id="triv-options" class="options-list"></div>
           <div id="triv-feedback" class="feedback-box hidden"></div>
@@ -420,15 +459,15 @@
         <!-- Joc B: Detector de Fake News, Demagògia i Dades -->
         <div class="card-panel">
           <div class="game-top-bar">
-            <span class="pill-tag pill-warning" id="det-speaker">Debat Electoral</span>
-            <span class="progress-text" id="det-progress">Cas 1 / 6</span>
+            <span class="pill-tag pill-warning" id="det-speaker">🌱 Nivell Insegur</span>
+            <span class="progress-text" id="det-progress">Cas 1</span>
           </div>
-          <h3>🕵️‍♀️ Detector de Debats: Dada, Fal·làcia o Fake News?</h3>
+          <h3>🕵️‍♀️ Detector: Dada Real, Demagògia o Fake News?</h3>
           <blockquote id="det-quote" class="debate-quote">Carregant...</blockquote>
-          <p class="small-muted">Com classificaríeu aquesta intervenció o missatge viral de campanya?</p>
+          <p class="small-muted">Què és aquesta frase que ha sortit en campanya?</p>
           <div class="detector-buttons" id="det-options">
             <button class="btn-detector" data-choice="dada">✅ Argument amb Dades Verificables</button>
-            <button class="btn-detector" data-choice="falacia">⚠️ Fal·làcia o Demagògia Política</button>
+            <button class="btn-detector" data-choice="falacia">⚠️ Fal·làcia o Promesa Demagògica</button>
             <button class="btn-detector" data-choice="fakenews">🚨 Fake News / Bulo Electoral</button>
           </div>
           <div id="det-feedback" class="feedback-box hidden"></div>
@@ -437,17 +476,17 @@
       </div>
     </section>
 
-    <!-- SECCIÓ 6: DICCIONARI POLÍTIC -->
+    <!-- SECCIÓ 6: DICCIONARI VISUAL DUA -->
     <section id="tab-diccionari" class="tab-section">
       <div class="section-header">
-        <h2>📖 Diccionari Polític i Electoral per al Projecte</h2>
-        <p>Busqueu qualsevol concepte clau per preparar els vostres discursos, el programa electoral i la nit electoral del 27 de novembre.</p>
+        <h2>📖 Diccionari Polític Multinivell (DUA)</h2>
+        <p>Cada concepte inclou una <strong>definició fàcil (🌱)</strong> i l'explicació aplicada a les eleccions del 2026:</p>
       </div>
 
       <div class="dictionary-controls card-panel">
-        <input type="search" id="dict-search" placeholder="🔍 Cerca un concepte (ex. Llei d'Hondt, investidura, vot útil, moció, coalició...)" />
+        <input type="search" id="dict-search" placeholder="🔍 Escriu una paraula (ex. coalició, Llei d'Hondt, investidura, vot útil...)" />
         <div class="dict-filter-pills" id="dict-filters">
-          <button class="filter-pill active" data-cat="all">Tots (12)</button>
+          <button class="filter-pill active" data-cat="all">Tots els conceptes</button>
           <button class="filter-pill" data-cat="Sistema Electoral">Sistema Electoral</button>
           <button class="filter-pill" data-cat="Parlament i Govern">Parlament i Govern</button>
           <button class="filter-pill" data-cat="Campanya i Comunicació">Campanya i Comunicació</button>
@@ -455,16 +494,13 @@
         </div>
       </div>
 
-      <div class="dictionary-grid" id="dictionary-grid">
-        <!-- Generat per JS -->
-      </div>
+      <div class="dictionary-grid" id="dictionary-grid"></div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>🗳️ <strong>Rumb al 27-N · Laboratori Electoral 2026</strong> · recurs educatiu interactiu per a 4t d'ESO / Secundària.</p>
-      <p class="small-muted">Dissenyat per aprendre ciències polítiques, comunicació electoral i funcionament democràtic mitjançant projectes.</p>
+      <p>🗳️ <strong>Laboratori Polític 2026 (Model DUA Multinivell: 🌱 Insegur · 🛡️ Segur · 🚀 Agosarat)</strong> · Projecte de Secundària (15 anys).</p>
     </div>
   </footer>
 

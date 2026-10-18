@@ -1,6 +1,7 @@
-// Lògica interactiva per a "Rumb al 27-N: Laboratori Electoral 2026"
+// Lògica interactiva per a "Laboratori Polític 2026 (Model DUA Multinivell: Insegur, Segur, Agosarat)"
 
 let userScore = 0;
+let currentDuaLevel = "insegur"; // 'insegur', 'segur', 'agosarat'
 
 function addScore(points) {
   userScore += points;
@@ -14,7 +15,75 @@ function addScore(points) {
   }
 }
 
-// 1. Navegació per Pestanyes
+// 1. Selector Global de Nivell DUA (Insegur / Segur / Agosarat)
+function setGlobalDuaLevel(level) {
+  currentDuaLevel = level;
+  const info = DUA_LEVELS[level];
+
+  document.querySelectorAll(".dua-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.dualevel === level);
+  });
+
+  const descEl = document.getElementById("dua-active-desc");
+  if (descEl && info) {
+    descEl.textContent = `${info.icon} ${info.subtitle}`;
+  }
+
+  // Actualitzem les seccions segons el nivell DUA
+  renderDuaProjectGuide();
+  renderPartyDetail();
+  filterCampaignGame(level);
+  setActualitatLevel(level);
+  renderDictionary();
+
+  // Adaptem també l'escenari de la Llei d'Hondt segons el nivell
+  const dhondtSelect = document.getElementById("dhondt-preset");
+  if (dhondtSelect) {
+    if (level === "insegur") dhondtSelect.value = "aula";
+    else if (level === "segur") dhondtSelect.value = "barcelona";
+    else dhondtSelect.value = "madrid";
+    loadDhondtPreset(dhondtSelect.value);
+  }
+}
+
+function renderDuaProjectGuide() {
+  const box = document.getElementById("dua-project-guide");
+  if (!box) return;
+
+  if (currentDuaLevel === "insegur") {
+    box.innerHTML = `
+      <h3>🌱 Guia Nivell Insegur (Pas a pas i visual)</h3>
+      <ul class="timeline-list">
+        <li><span class="time-badge">Pas 1</span><div><strong>Nom, Color i Símbol:</strong> Trieu un nom curt i un color (vermell, blau, verd, morat...) que us representi.</div></li>
+        <li><span class="time-badge">Pas 2</span><div><strong>Eslògan curt:</strong> Creeu una frase de 3 a 5 paraules al <em>Creador de Cartell</em>.</div></li>
+        <li><span class="time-badge">Pas 3</span><div><strong>3 Propostes Joves:</strong> Escolliu 3 temes de sota (ex. lloguers, beques, salut mental) i escriviu una idea per a cadascun.</div></li>
+        <li><span class="time-badge">Pas 4</span><div><strong>Practiqueu als Jocs 🌱:</strong> Jugueu als reptes de nivell Insegur per guanyar confiança!</div></li>
+      </ul>
+    `;
+  } else if (currentDuaLevel === "segur") {
+    box.innerHTML = `
+      <h3>🛡️ Guia Nivell Segur (Autònom per al projecte)</h3>
+      <ul class="timeline-list">
+        <li><span class="time-badge">Pas 1</span><div><strong>Identitat i Eix Ideològic:</strong> Situeu el vostre partit a l'eix Esquerra-Dreta i justifiqueu la psicologia del vostre color i logotip.</div></li>
+        <li><span class="time-badge">Pas 2</span><div><strong>Campanya 2026 (Cartell i TikTok):</strong> Dissenyeu el cartell i un guió de vídeo de 30 segons adreçat als vostres votants.</div></li>
+        <li><span class="time-badge">Pas 3</span><div><strong>Programa amb Dades:</strong> Redacteu propostes sobre habitatge, educació i clima amb dades verificables.</div></li>
+        <li><span class="time-badge">Pas 4</span><div><strong>Pactes d'Investidura:</strong> Utilitzeu el Pactòmetre per decidir amb quins grups pactaríeu en 1a o 2a volta.</div></li>
+      </ul>
+    `;
+  } else {
+    box.innerHTML = `
+      <h3>🚀 Guia Nivell Agosarat (Estratègia i anàlisi crítica)</h3>
+      <ul class="timeline-list">
+        <li><span class="time-badge">Pas 1</span><div><strong>Estratègia de Coalicions 2026:</strong> Analitzeu si al vostre partit li convé anar en solitari o en coalició (com <em>Frente Amplio</em> o <em>ERC+Podem</em>) segons la Llei d'Hondt.</div></li>
+        <li><span class="time-badge">Pas 2</span><div><strong>Memòria Econòmica:</strong> Expliqueu com finançareu les vostres mesures (impostos progressius, fons europeus, rebaixes fiscals) sense caure en demagògia.</div></li>
+        <li><span class="time-badge">Pas 3</span><div><strong>Debat i Desmuntatge de Fal·làcies:</strong> Entreneu-vos per detectar fal·làcies d'Home de Palla i <em>fake news</em> als debats.</div></li>
+        <li><span class="time-badge">Pas 4</span><div><strong>Aritmètica del Congrés i Senat:</strong> Simuleu escenaris de bloqueig, vot útil i llistes conjuntes al Senat.</div></li>
+      </ul>
+    `;
+  }
+}
+
+// 2. Navegació per Pestanyes
 function switchTab(tabId) {
   document.querySelectorAll(".nav-tab").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.tab === tabId);
@@ -39,7 +108,7 @@ function switchSimulator(simName) {
   document.getElementById("sim-dhondt").classList.toggle("hidden", simName !== "dhondt");
 }
 
-// 2. Compte Enrere cap al 27 de novembre de 2026 (09:00h obertura de col·legis)
+// 3. Compte Enrere cap a les Eleccions de Novembre de 2026
 function updateCountdown() {
   const electionDate = new Date("2026-11-27T09:00:00+01:00").getTime();
   const now = new Date().getTime();
@@ -48,16 +117,15 @@ function updateCountdown() {
   if (!display) return;
 
   if (diff <= 0) {
-    display.textContent = "🗳️ Avui és el 27-N! Dia de votació";
+    display.textContent = "🗳️ Dia d'Eleccions!";
     return;
   }
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  display.textContent = `Falten ${days} dies, ${hours}h i ${mins}m`;
+  display.textContent = `Falten ${days} dies i ${hours}h`;
 }
 
-// 3. Secció 2: Radiografia dels Partits, Logos i Eix Ideològic
+// 4. Secció 2: Partits, Coalicions i Logos 2026 (Adaptat DUA)
 let selectedPartyId = PARTIES_DATA[0].id;
 
 function renderPartiesSection() {
@@ -69,25 +137,23 @@ function renderPartiesSection() {
   grid.innerHTML = "";
 
   PARTIES_DATA.forEach((p) => {
-    // Posició de -10 a +10 convertida a percentatge (8% a 92%)
-    const pct = 50 + (p.axisX / 10) * 42;
+    const pct = 50 + (p.axisX / 10) * 43;
     const node = document.createElement("button");
     node.className = `spectrum-node ${p.id === selectedPartyId ? "active" : ""}`;
     node.style.left = `${pct}%`;
     node.style.borderColor = p.color;
     node.style.color = p.color;
     node.textContent = p.acronym;
-    node.title = `${p.name} (${p.ideology})`;
+    node.title = `${p.name}`;
     node.addEventListener("click", () => selectParty(p.id));
     track.appendChild(node);
 
-    // Targeta selector
     const card = document.createElement("div");
     card.className = `party-mini-card ${p.id === selectedPartyId ? "active" : ""}`;
     card.innerHTML = `
       <div class="party-mini-logo">${p.logoSvg}</div>
-      <strong>${p.acronym}</strong>
-      <span class="small-muted" style="font-size:0.75rem">${p.seats2026} escons est.</span>
+      <strong style="font-size:0.88rem">${p.acronym}</strong>
+      <span class="small-muted" style="font-size:0.74rem">${p.leader2026.split("(")[0]}</span>
     `;
     card.addEventListener("click", () => selectParty(p.id));
     grid.appendChild(card);
@@ -106,12 +172,15 @@ function renderPartyDetail() {
   const p = PARTIES_DATA.find((item) => item.id === selectedPartyId);
   if (!container || !p) return;
 
+  const duaInfo = DUA_LEVELS[currentDuaLevel];
+  const levelSummary = p.duaSummary[currentDuaLevel] || p.duaSummary.segur;
+
   const slogansHtml = p.slogans
     .map(
       (s) => `
       <div class="slogan-item" style="border-left-color: ${p.color}">
-        <div class="slogan-quote">«${s.text}» <span style="font-size:0.75rem; font-weight:500; color:#64748b">(${s.year})</span></div>
-        <div class="slogan-sub">🎯 Objectiu comunicatiu: ${s.focus}</div>
+        <div class="slogan-quote">«${s.text}»</div>
+        <div class="slogan-sub">🎯 ${s.focus}</div>
       </div>
     `
     )
@@ -125,38 +194,45 @@ function renderPartyDetail() {
       <div class="detail-meta">
         <h3>${p.name}</h3>
         <span class="ideology-badge" style="background:${p.secondaryColor}; color:#0f172a">
-          🧭 ${p.ideology}
+          🧭 ${p.ideology} · 👤 Líder: ${p.leader2026}
         </span>
         <p class="small-muted" style="margin-top:0.4rem">
-          <strong>Símbol i logotip:</strong> ${p.symbolName}
+          <strong>🎨 Logotip i símbol:</strong> ${p.symbolName}
         </p>
+      </div>
+    </div>
+
+    <div class="dua-highlight-callout" style="border-left-color:${p.color}">
+      <strong>${duaInfo.icon} Explicació adaptada (${duaInfo.name}):</strong><br>
+      ${levelSummary}
+      <div style="margin-top:0.45rem; font-size:0.85rem; color:#334155">
+        <strong>🤝 Agrupament / Coalició Novembre 2026:</strong> ${p.coalitionStatus2026}
       </div>
     </div>
 
     <div class="detail-grid">
       <div class="detail-box">
-        <h4>💬 Eslògans de Campanya i Lema 2026</h4>
+        <h4>💬 Eslògans de Campanya 2026</h4>
         ${slogansHtml}
       </div>
 
       <div class="detail-box">
-        <h4>🎨 Psicologia del Color i Identitat Visual</h4>
-        <p style="font-size:0.9rem; margin-bottom:0.75rem">${p.colorPsychology}</p>
+        <h4>🎨 Per què fan servir aquest Color i Logo?</h4>
+        <p style="font-size:0.9rem; margin-bottom:0.65rem">${p.colorPsychology}</p>
         <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.82rem; font-weight:700">
-          <span style="display:inline-block; width:24px; height:24px; border-radius:6px; background:${p.color}"></span>
-          Color principal: ${p.color}
+          <span style="display:inline-block; width:22px; height:22px; border-radius:6px; background:${p.color}"></span>
+          Color corporatiu: ${p.color}
         </div>
       </div>
 
       <div class="detail-box">
-        <h4>📱 Com fan campanya el 2026? (TikTok, Debats i To)</h4>
-        <p style="font-size:0.88rem; margin-bottom:0.5rem"><strong>To del discurs:</strong> ${p.campaignStyle.tone}</p>
-        <p style="font-size:0.88rem; margin-bottom:0.5rem"><strong>Xarxes socials:</strong> ${p.campaignStyle.socialMedia}</p>
-        <p style="font-size:0.88rem"><strong>Públic objectiu (Target):</strong> ${p.campaignStyle.target}</p>
+        <h4>📱 Com fan campanya a TikTok i Debats?</h4>
+        <p style="font-size:0.88rem; margin-bottom:0.45rem"><strong>To del discurs:</strong> ${p.campaignStyle.tone}</p>
+        <p style="font-size:0.88rem"><strong>Xarxes socials:</strong> ${p.campaignStyle.socialMedia}</p>
       </div>
 
       <div class="detail-box">
-        <h4>📌 Propostes Estrella a la Campanya 2026</h4>
+        <h4>📌 Propostes Estrella del seu Programa</h4>
         <ul class="proposals-list">
           ${issuesHtml}
         </ul>
@@ -165,25 +241,25 @@ function renderPartyDetail() {
   `;
 }
 
-// 4. Secció 3: Joc Caçadors de Campanyes (Eslògans, Logos i Xarxes)
-let currentCampMode = "all";
-let filteredCampQuestions = [...CAMPAIGN_CHALLENGES];
+// 5. Secció 3: Joc Caçadors de Campanyes Multinivell (🌱 Insegur, 🛡️ Segur, 🚀 Agosarat)
+let currentCampMode = "insegur";
+let filteredCampQuestions = [];
 let currentCampIndex = 0;
 
 function filterCampaignGame(mode) {
   currentCampMode = mode;
-  document.querySelectorAll(".mode-btn").forEach((b) => {
+  document.querySelectorAll("[data-campmode]").forEach((b) => {
     b.classList.toggle("active", b.dataset.campmode === mode);
   });
   filteredCampQuestions =
     mode === "all"
       ? [...CAMPAIGN_CHALLENGES]
-      : CAMPAIGN_CHALLENGES.filter((q) => q.mode === mode);
+      : CAMPAIGN_CHALLENGES.filter((q) => q.level === mode);
   currentCampIndex = 0;
   renderCampaignQuestion();
 }
 
-document.querySelectorAll(".mode-btn").forEach((btn) => {
+document.querySelectorAll("[data-campmode]").forEach((btn) => {
   btn.addEventListener("click", () => filterCampaignGame(btn.dataset.campmode));
 });
 
@@ -194,7 +270,7 @@ function renderCampaignQuestion() {
   document.getElementById("camp-badge").textContent = q.badge;
   document.getElementById("camp-progress").textContent = `Repte ${currentCampIndex + 1} de ${filteredCampQuestions.length}`;
   document.getElementById("camp-question").textContent = q.prompt;
-  document.getElementById("camp-hint").textContent = `💡 Pista visual / comunicativa: ${q.visualHint}`;
+  document.getElementById("camp-hint").textContent = `💡 ${q.visualHint}`;
 
   const optionsContainer = document.getElementById("camp-options");
   const feedbackBox = document.getElementById("camp-feedback");
@@ -221,16 +297,18 @@ function handleCampaignAnswer(selectedIndex, clickedBtn) {
   const feedbackBox = document.getElementById("camp-feedback");
   const nextBtn = document.getElementById("camp-next-btn");
 
+  const xpPoints = q.level === "agosarat" ? 25 : q.level === "segur" ? 15 : 10;
+
   if (selectedIndex === q.correct) {
     clickedBtn.classList.add("correct");
     feedbackBox.className = "feedback-box ok";
-    feedbackBox.innerHTML = `<strong>✅ Correcte! (+15 XP)</strong><br>${q.explanation}`;
-    addScore(15);
+    feedbackBox.innerHTML = `<strong>✅ Correcte! (+${xpPoints} XP)</strong><br>${q.explanation}`;
+    addScore(xpPoints);
   } else {
     clickedBtn.classList.add("wrong");
     allBtns[q.correct].classList.add("correct");
     feedbackBox.className = "feedback-box err";
-    feedbackBox.innerHTML = `<strong>❌ No ben bé!</strong> La resposta correcta és <strong>${q.options[q.correct]}</strong>.<br>${q.explanation}`;
+    feedbackBox.innerHTML = `<strong>❌ Resposta correcta: ${q.options[q.correct]}</strong><br>${q.explanation}`;
   }
 
   nextBtn.classList.remove("hidden");
@@ -241,15 +319,15 @@ document.getElementById("camp-next-btn")?.addEventListener("click", () => {
   renderCampaignQuestion();
 });
 
-// Simulador Creatiu de Cartell i Eslògan per al grup
+// Simulador Creatiu de Cartell i Eslògan
 function updatePosterPreview() {
   const name = document.getElementById("lab-party-name").value.trim() || "EL NOSTRE PARTIT";
-  const slogan = document.getElementById("lab-slogan").value.trim() || "El futur comença avui";
+  const slogan = document.getElementById("lab-slogan").value.trim() || "El nostre futur comença avui";
   const colorSelect = document.getElementById("lab-color");
   const color = colorSelect.value;
   const psychText = colorSelect.options[colorSelect.selectedIndex].dataset.psych;
   const symbol = document.getElementById("lab-symbol").value;
-  const proposal = document.getElementById("lab-proposal").value.trim() || "Proposta clau per al 27-N";
+  const proposal = document.getElementById("lab-proposal").value.trim() || "Proposta clau per als joves";
 
   document.getElementById("poster-title").textContent = name.toUpperCase();
   document.getElementById("poster-slogan").textContent = `«${slogan}»`;
@@ -260,17 +338,15 @@ function updatePosterPreview() {
   poster.style.background = `linear-gradient(145deg, ${color} 0%, #0f172a 135%)`;
 
   const wordCount = slogan.split(/\s+/).filter(Boolean).length;
-  let sloganTip =
+  const sloganTip =
     wordCount <= 6
-      ? "🔥 <strong>Eslògan directe i memorable</strong> (${wordCount} paraules): ideal per a pancartes, mítings i TikTok!"
-      : `⚠️ <strong>Eslògan una mica llarg</strong> (${wordCount} paraules): els assessors polítics recomanen entre 3 i 6 paraules perquè tothom el recordi.`;
-
-  sloganTip = sloganTip.replace("${wordCount}", wordCount);
+      ? `🔥 <strong>Molt bon eslògan (${wordCount} paraules):</strong> és curt, fàcil de recordar i funciona tant en cartell com a TikTok!`
+      : `⚠️ <strong>Eslògan una mica llarg (${wordCount} paraules):</strong> proveu de resumir-lo a màxim 6 paraules perquè tingui més força.`;
 
   document.getElementById("poster-analysis").innerHTML = `
-    <strong>📊 Anàlisi dels Spin Doctors per al vostre grup:</strong><br>
-    • <strong>Psicologia del color escollit:</strong> ${psychText}<br>
-    • <strong>Efectivitat del lema:</strong> ${sloganTip}
+    <strong>💡 Consell de Campanya per al vostre grup:</strong><br>
+    • <strong>Significat del vostre color:</strong> ${psychText}<br>
+    • <strong>Anàlisi de l'eslògan:</strong> ${sloganTip}
   `;
 }
 
@@ -278,7 +354,7 @@ function updatePosterPreview() {
   document.getElementById(id)?.addEventListener("input", updatePosterPreview);
 });
 
-// 5. Secció 4A: Pactòmetre i Hemicicle de 350 Escons
+// 6. Secció 4A: Pactòmetre i Hemicicle de 350 Escons (Amb nous partits 2026)
 let pactoState = [];
 
 function initPactometre() {
@@ -288,13 +364,12 @@ function initPactometre() {
     name: p.name,
     color: p.color,
     seats: p.seats2026,
-    vote: "abs" // 'yes', 'abs', 'no'
+    vote: "abs"
   }));
 
-  // Afegim l'opció del Partit d'Aula amb 0 escons inicials perquè puguin jugar-hi si volen
   pactoState.push({
     id: "aula",
-    acronym: "PARTIT AULA",
+    acronym: "PARTIT D'AULA",
     name: "El Nostre Partit (4t ESO)",
     color: "#7C4DFF",
     seats: 0,
@@ -317,8 +392,8 @@ function renderPactometre() {
       <div class="pacto-party-info">
         <span class="color-dot" style="background:${p.color}"></span>
         <div>
-          <strong>${p.acronym}</strong>
-          <div class="small-muted" style="font-size:0.73rem">${p.seats} escons</div>
+          <strong style="font-size:0.88rem">${p.acronym}</strong>
+          <div class="small-muted" style="font-size:0.72rem">${p.seats} escons</div>
         </div>
       </div>
       <div>
@@ -376,14 +451,23 @@ function updatePactoCalculations() {
 
   drawHemicycle(yesSeats, absSeats, noSeats);
 
-  // Comprovació d'incompatibilitats polítiques reals per ensenyar ciència política
+  // Avisos pedagògics de compatibilitat política 2026
   let warningMsg = "";
-  if (yesParties.includes("vox") && (yesParties.includes("erc") || yesParties.includes("bildu") || yesParties.includes("junts") || yesParties.includes("sumar") || yesParties.includes("psoe"))) {
-    warningMsg = "⚠️ <strong>Alerta de Politòleg:</strong> Heu ajuntat en el 'SÍ' partits amb línies vermelles totalment oposades (Vox amb partits d'esquerra o independentistes). A la realitat aquest pacte és inviable!";
-  } else if (yesParties.includes("pp") && (yesParties.includes("bildu") || yesParties.includes("erc") || yesParties.includes("sumar"))) {
-    warningMsg = "⚠️ <strong>Alerta de Politòleg:</strong> El PP i partits d'esquerra sobiranista o Sumar tenen programes econòmics i territorials oposats.";
-  } else if (yesParties.includes("psoe") && yesParties.includes("pp")) {
-    warningMsg = "💡 <strong>Gran Coalició (PSOE + PP):</strong> Tot i que suma majoria de sobres, a Espanya els dos grans partits competeixen per liderar blocs alternatius i no solen governar junts.";
+  const hasRightRad = yesParties.includes("vox") || yesParties.includes("salf");
+  const hasLeftOrIndep =
+    yesParties.includes("psoe") ||
+    yesParties.includes("frente-amplio") ||
+    yesParties.includes("podemos") ||
+    yesParties.includes("erc") ||
+    yesParties.includes("junts") ||
+    yesParties.includes("territorials");
+
+  if (hasRightRad && hasLeftOrIndep) {
+    warningMsg = "⚠️ <strong>Alerta de Politòleg:</strong> Heu posat al bloc del 'SÍ' a Vox o SALF juntament amb partits d'esquerra o nacionalistes catalans/bascos. Tenen programes oposats i a la realitat no pacten mai!";
+  } else if (yesParties.includes("pp") && (yesParties.includes("frente-amplio") || yesParties.includes("podemos") || yesParties.includes("erc"))) {
+    warningMsg = "⚠️ <strong>Alerta de Politòleg:</strong> El PP i els partits d'esquerra (Frente Amplio, Podem o ERC) tenen projectes econòmics i territorials contraris.";
+  } else if (yesParties.includes("frente-amplio") && yesParties.includes("podemos") && yesParties.includes("psoe")) {
+    warningMsg = "💡 <strong>Bloc Progressista Reunificat al Congrés:</strong> Tot i presentar-se per separat a les eleccions (PSOE, Frente Amplio i Podem/ERC), al Congrés necessiten sumar els seus escons per investir un govern d'esquerres.";
   }
 
   const verdictEl = document.getElementById("investidura-verdict");
@@ -391,24 +475,24 @@ function updatePactoCalculations() {
     verdictEl.style.background = "#f0fdf4";
     verdictEl.style.borderColor = "#86efac";
     verdictEl.innerHTML = `
-      <strong>🎉 INVESTIDURA APROVADA EN 1a VOTACIÓ (Majoria Absoluta)!</strong><br>
-      Amb <strong>${yesSeats} vots a favor</strong> (mínim 176), el candidat o candidata és escollit President/a del Govern a la primera volta.
+      <strong>🎉 INVESTIDURA APROVADA EN 1a VOLTA (Majoria Absoluta: ${yesSeats} SÍ)!</strong><br>
+      Supera els 176 diputats necessaris. Hi ha nou Govern a la primera votació!
       ${warningMsg ? `<div style="margin-top:0.5rem; color:#92400e">${warningMsg}</div>` : ""}
     `;
   } else if (yesSeats > noSeats && yesSeats > 0) {
     verdictEl.style.background = "#eff6ff";
     verdictEl.style.borderColor = "#93c5fd";
     verdictEl.innerHTML = `
-      <strong>⚖️ INVESTIDURA APROVADA EN 2a VOTACIÓ (Majoria Simple, 48h després)!</strong><br>
-      No arriba als 176 escons en 1a volta, però com que té <strong>més SÍ (${yesSeats}) que NO (${noSeats})</strong> gràcies a les abstencions (${absSeats}), surt investit en segona volta!
+      <strong>⚖️ INVESTIDURA APROVADA EN 2a VOLTA (Majoria Simple, 48h després)!</strong><br>
+      No arriba a 176, però té <strong>més SÍ (${yesSeats}) que NO (${noSeats})</strong> gràcies a les abstencions (${absSeats}).
       ${warningMsg ? `<div style="margin-top:0.5rem; color:#92400e">${warningMsg}</div>` : ""}
     `;
   } else {
     verdictEl.style.background = "#fef2f2";
     verdictEl.style.borderColor = "#fca5a5";
     verdictEl.innerHTML = `
-      <strong>❌ INVESTIDURA FALLIDA (Bloqueig Parlamentari)</strong><br>
-      Hi ha més o iguals vots en contra (${noSeats} NO) que a favor (${yesSeats} SÍ). Si en 2 mesos cap candidat aconsegueix la confiança del Congrés, es dissolen les Corts i es repeteixen les eleccions!
+      <strong>❌ INVESTIDURA REBUTJADA (Més o iguals NO que SÍ)</strong><br>
+      Cal seguir negociant amb altres partits perquè votin SÍ o s'abstinguin.
     `;
   }
 }
@@ -420,8 +504,6 @@ function drawHemicycle(yesSeats, absSeats, noSeats) {
   const total = Math.max(1, yesSeats + absSeats + noSeats);
   const yesAngle = (yesSeats / total) * Math.PI;
   const absAngle = (absSeats / total) * Math.PI;
-
-  // Dibuixem un hemicicle d'arcs i punts per representar el Congrés
   const cx = 200;
   const cy = 195;
 
@@ -443,7 +525,6 @@ function drawHemicycle(yesSeats, absSeats, noSeats) {
   const a2 = yesAngle + absAngle;
   const a3 = Math.PI;
 
-  // Línia de la majoria absoluta (meitat exacta de l'hemicicle: 90 graus)
   svg.innerHTML = `
     <path d="${arcPath(a0, a1, 65, 165)}" fill="#16a34a" />
     <path d="${arcPath(a1, a2, 65, 165)}" fill="#94a3b8" />
@@ -456,7 +537,7 @@ function drawHemicycle(yesSeats, absSeats, noSeats) {
 
 document.getElementById("reset-pacto-btn")?.addEventListener("click", initPactometre);
 
-// 6. Secció 4B: Simulador de la Llei d'Hondt
+// 7. Secció 4B: Simulador de la Llei d'Hondt
 let currentDhondtParties = [];
 
 function loadDhondtPreset(presetKey) {
@@ -465,7 +546,7 @@ function loadDhondtPreset(presetKey) {
 
   document.getElementById("dhondt-seats").value = preset.seats;
   document.getElementById("dhondt-blank").value = preset.blankVotes;
-  document.getElementById("dhondt-explanation").innerHTML = `<strong>📌 Context de la circumscripció (${preset.name}):</strong> ${preset.explanation}`;
+  document.getElementById("dhondt-explanation").innerHTML = `<strong>${preset.name}:</strong> ${preset.explanation}`;
 
   currentDhondtParties = preset.parties.map((p) => ({ ...p }));
   renderDhondtPartyInputs();
@@ -509,9 +590,8 @@ function calculateDhondt() {
 
   const partyVotesSum = currentDhondtParties.reduce((acc, p) => acc + p.votes, 0);
   const totalValidVotes = partyVotesSum + blankVotes;
-  const minThresholdVotes = totalValidVotes * 0.03; // 3% al Congrés
+  const minThresholdVotes = totalValidVotes * 0.03;
 
-  // Generem tots els quocients per als partits que superen el 3%
   const allQuotients = [];
   currentDhondtParties.forEach((p, pIdx) => {
     p.passesThreshold = p.votes >= minThresholdVotes && p.votes > 0;
@@ -528,7 +608,6 @@ function calculateDhondt() {
     }
   });
 
-  // Ordenem de major a menor quocient (en cas d'empat, guanya el partit amb més vots totals)
   allQuotients.sort((a, b) => {
     if (b.value !== a.value) return b.value - a.value;
     return b.partyVotes - a.partyVotes;
@@ -541,14 +620,13 @@ function calculateDhondt() {
     winningCells.set(`${w.partyIdx}-${w.divisor}`, orderIdx + 1);
   });
 
-  // Renderitzem barres de resum d'escons
   const barsContainer = document.getElementById("dhondt-summary-bars");
   barsContainer.innerHTML = "";
 
   currentDhondtParties.forEach((p) => {
     const votePct = totalValidVotes > 0 ? ((p.votes / totalValidVotes) * 100).toFixed(1) : "0.0";
     const seatPct = totalSeats > 0 ? (p.seatsWon / totalSeats) * 100 : 0;
-    const statusTag = !p.passesThreshold && p.votes > 0 ? `<span style="color:#dc2626; font-size:0.75rem">(Fora: < 3%)</span>` : "";
+    const statusTag = !p.passesThreshold && p.votes > 0 ? `<span style="color:#dc2626; font-size:0.75rem">(Menys del 3%: fora)</span>` : "";
 
     const item = document.createElement("div");
     item.className = "dhondt-bar-item";
@@ -564,8 +642,7 @@ function calculateDhondt() {
     barsContainer.appendChild(item);
   });
 
-  // Renderitzem la taula de divisions (mostrem fins a un màxim de 12 columnes perquè sigui llegible a l'aula)
-  const colsToShow = Math.min(totalSeats, 12);
+  const colsToShow = Math.min(totalSeats, 10);
   let tableHtml = `<table class="dhondt-table"><thead><tr><th>Partit</th><th>Vots (% vàlids)</th>`;
   for (let d = 1; d <= colsToShow; d++) {
     tableHtml += `<th>÷ ${d}</th>`;
@@ -573,7 +650,7 @@ function calculateDhondt() {
   tableHtml += `</tr></thead><tbody>`;
 
   currentDhondtParties.forEach((p, pIdx) => {
-    const pct = totalValidVotes > 0 ? ((p.votes / totalValidVotes) * 100).toFixed(2) : "0.00";
+    const pct = totalValidVotes > 0 ? ((p.votes / totalValidVotes) * 100).toFixed(1) : "0.0";
     tableHtml += `<tr class="${!p.passesThreshold ? "dhondt-excluded-row" : ""}">`;
     tableHtml += `<td style="text-align:left; font-weight:700"><span class="color-dot" style="display:inline-block; width:10px; height:10px; background:${p.color}; margin-right:6px"></span>${p.name}</td>`;
     tableHtml += `<td>${p.votes.toLocaleString("ca-ES")} (${pct}%)</td>`;
@@ -582,7 +659,7 @@ function calculateDhondt() {
       const qVal = Math.round(p.votes / d).toLocaleString("ca-ES");
       const winOrder = winningCells.get(`${pIdx}-${d}`);
       if (winOrder) {
-        tableHtml += `<td class="dhondt-winner-cell" title="Escó assignat número #${winOrder}">${qVal} <br><small>🏅 Escó #${winOrder}</small></td>`;
+        tableHtml += `<td class="dhondt-winner-cell">${qVal} <br><small>🏅 Escó #${winOrder}</small></td>`;
       } else {
         tableHtml += `<td>${qVal}</td>`;
       }
@@ -598,15 +675,41 @@ document.getElementById("dhondt-preset")?.addEventListener("change", (e) => load
 document.getElementById("dhondt-seats")?.addEventListener("input", calculateDhondt);
 document.getElementById("dhondt-blank")?.addEventListener("input", calculateDhondt);
 
-// 7. Secció 5: Trivial 27-N i Detector de Manipulació / Fake News
+// 8. Secció 5: Trivial i Detector de Debats Multinivell (🌱 Insegur, 🛡️ Segur, 🚀 Agosarat)
+let currentActLevel = "insegur";
+let filteredTrivial = [];
 let trivIndex = 0;
+let filteredDetector = [];
+let detIndex = 0;
+
+function setActualitatLevel(level) {
+  currentActLevel = level;
+  document.querySelectorAll("[data-actlevel]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.actlevel === level);
+  });
+
+  filteredTrivial =
+    level === "all"
+      ? [...TRIVIAL_QUESTIONS]
+      : TRIVIAL_QUESTIONS.filter((q) => q.level === level);
+  trivIndex = 0;
+
+  filteredDetector =
+    level === "all"
+      ? [...DETECTOR_CASES]
+      : DETECTOR_CASES.filter((c) => c.level === level);
+  detIndex = 0;
+
+  renderTrivialQuestion();
+  renderDetectorCase();
+}
 
 function renderTrivialQuestion() {
-  const q = TRIVIAL_QUESTIONS[trivIndex];
+  const q = filteredTrivial[trivIndex];
   if (!q) return;
 
   document.getElementById("triv-category").textContent = q.category;
-  document.getElementById("triv-progress").textContent = `Pregunta ${trivIndex + 1} / ${TRIVIAL_QUESTIONS.length}`;
+  document.getElementById("triv-progress").textContent = `Pregunta ${trivIndex + 1} / ${filteredTrivial.length}`;
   document.getElementById("triv-question").textContent = q.question;
 
   const optsEl = document.getElementById("triv-options");
@@ -632,7 +735,7 @@ function renderTrivialQuestion() {
         btn.classList.add("wrong");
         optsEl.querySelectorAll(".option-btn")[q.correct].classList.add("correct");
         fbEl.className = "feedback-box err";
-        fbEl.innerHTML = `<strong>❌ Incorrecte.</strong><br>${q.explanation}`;
+        fbEl.innerHTML = `<strong>❌ Resposta correcta: ${q.options[q.correct]}</strong><br>${q.explanation}`;
       }
       nextBtn.classList.remove("hidden");
     });
@@ -641,19 +744,16 @@ function renderTrivialQuestion() {
 }
 
 document.getElementById("triv-next-btn")?.addEventListener("click", () => {
-  trivIndex = (trivIndex + 1) % TRIVIAL_QUESTIONS.length;
+  trivIndex = (trivIndex + 1) % filteredTrivial.length;
   renderTrivialQuestion();
 });
 
-// Detector de Fake News / Fal·làcies / Dades
-let detIndex = 0;
-
 function renderDetectorCase() {
-  const c = DETECTOR_CASES[detIndex];
+  const c = filteredDetector[detIndex];
   if (!c) return;
 
   document.getElementById("det-speaker").textContent = c.speaker;
-  document.getElementById("det-progress").textContent = `Cas ${detIndex + 1} / ${DETECTOR_CASES.length}`;
+  document.getElementById("det-progress").textContent = `Cas ${detIndex + 1} / ${filteredDetector.length}`;
   document.getElementById("det-quote").textContent = c.quote;
 
   const fbEl = document.getElementById("det-feedback");
@@ -664,6 +764,8 @@ function renderDetectorCase() {
   document.querySelectorAll("#det-options .btn-detector").forEach((btn) => {
     btn.disabled = false;
     btn.className = "btn-detector";
+    btn.style.background = "";
+    btn.style.borderColor = "";
     btn.onclick = () => {
       document.querySelectorAll("#det-options .btn-detector").forEach((b) => (b.disabled = true));
       if (btn.dataset.choice === c.correctCategory) {
@@ -676,7 +778,7 @@ function renderDetectorCase() {
         btn.style.background = "#fee2e2";
         btn.style.borderColor = "#dc2626";
         fbEl.className = "feedback-box err";
-        fbEl.innerHTML = `<strong>⚠️ Atenció! Era: ${c.type}</strong><br>${c.explanation}`;
+        fbEl.innerHTML = `<strong>⚠️ Era: ${c.type}</strong><br>${c.explanation}`;
       }
       nextBtn.classList.remove("hidden");
     };
@@ -684,11 +786,11 @@ function renderDetectorCase() {
 }
 
 document.getElementById("det-next-btn")?.addEventListener("click", () => {
-  detIndex = (detIndex + 1) % DETECTOR_CASES.length;
+  detIndex = (detIndex + 1) % filteredDetector.length;
   renderDetectorCase();
 });
 
-// 8. Secció 6: Diccionari Polític
+// 9. Secció 6: Diccionari Polític Multinivell (DUA)
 let currentDictCat = "all";
 
 function renderDictionary() {
@@ -700,6 +802,7 @@ function renderDictionary() {
     const matchesCat = currentDictCat === "all" || item.category === currentDictCat;
     const matchesText =
       item.term.toLowerCase().includes(query) ||
+      item.simpleDef.toLowerCase().includes(query) ||
       item.definition.toLowerCase().includes(query) ||
       item.example2026.toLowerCase().includes(query);
     return matchesCat && matchesText;
@@ -716,9 +819,10 @@ function renderDictionary() {
       <article class="dict-card">
         <span class="pill-tag" style="margin-bottom:0.2rem">${item.category}</span>
         <h3>${item.term}</h3>
-        <p style="font-size:0.92rem">${item.definition}</p>
+        <div class="dict-simple-box">${item.simpleDef}</div>
+        <p style="font-size:0.9rem"><strong>🛡️/🚀 Ampliació:</strong> ${item.definition}</p>
         <div class="dict-example">
-          <strong>💡 Aplicació al 27-N i al projecte:</strong> ${item.example2026}
+          <strong>💡 Exemple 2026:</strong> ${item.example2026}
         </div>
       </article>
     `
@@ -740,11 +844,7 @@ window.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setInterval(updateCountdown, 30000);
   renderPartiesSection();
-  renderCampaignQuestion();
   updatePosterPreview();
   initPactometre();
-  loadDhondtPreset("barcelona");
-  renderTrivialQuestion();
-  renderDetectorCase();
-  renderDictionary();
+  setGlobalDuaLevel("insegur"); // Comença per defecte en el mode més accessible i guiat
 });
