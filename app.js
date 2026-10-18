@@ -32,6 +32,8 @@ function setGlobalDuaLevel(level) {
   // Actualitzem les seccions segons el nivell DUA
   renderDuaProjectGuide();
   renderPartyDetail();
+  renderFranceSection();
+  setFranceGameLevel(level);
   filterCampaignGame(level);
   setActualitatLevel(level);
   renderDictionary();
@@ -839,6 +841,116 @@ document.querySelectorAll("#dict-filters .filter-pill").forEach((btn) => {
   });
 });
 
+// 10. Secció França 2026: Mobilitzacions Estudiantils i Joc pel Bé Comú
+let currentFranceLevel = "insegur";
+let filteredFranceQuestions = [];
+let frQuestionIndex = 0;
+
+function renderFranceSection() {
+  const introEl = document.getElementById("france-dua-intro");
+  const pillarsEl = document.getElementById("france-pillars-grid");
+  if (!introEl || !pillarsEl) return;
+
+  introEl.innerHTML = FRANCE_MOBILIZATION_INFO.duaIntro[currentDuaLevel] || FRANCE_MOBILIZATION_INFO.duaIntro.segur;
+
+  pillarsEl.innerHTML = FRANCE_MOBILIZATION_INFO.pillars
+    .map(
+      (p) => `
+      <article class="issue-card">
+        <div class="issue-icon">${p.icon}</div>
+        <h3>${p.title}</h3>
+        <p>${p.problem}</p>
+        <div class="issue-perspectives">
+          <span class="persp-left" style="background:#f0fdf4; color:#14532d; border-left-color:#16a34a">
+            <strong>🤝 ${p.forAll}</strong>
+          </span>
+        </div>
+      </article>
+    `
+    )
+    .join("");
+}
+
+function setFranceGameLevel(level) {
+  currentFranceLevel = level;
+  document.querySelectorAll("[data-frlevel]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.frlevel === level);
+  });
+
+  filteredFranceQuestions =
+    level === "all"
+      ? [...FRANCE_GAME_CHALLENGES]
+      : FRANCE_GAME_CHALLENGES.filter((q) => q.level === level);
+  frQuestionIndex = 0;
+  renderFranceQuestion();
+}
+
+function renderFranceQuestion() {
+  const q = filteredFranceQuestions[frQuestionIndex];
+  if (!q) return;
+
+  document.getElementById("fr-badge").textContent = q.badge;
+  document.getElementById("fr-progress").textContent = `Situació ${frQuestionIndex + 1} de ${filteredFranceQuestions.length}`;
+  document.getElementById("fr-situation").textContent = q.situation;
+  document.getElementById("fr-question").textContent = q.question;
+
+  const optsEl = document.getElementById("fr-options");
+  const fbEl = document.getElementById("fr-feedback");
+  const nextBtn = document.getElementById("fr-next-btn");
+
+  optsEl.innerHTML = "";
+  fbEl.className = "feedback-box hidden";
+  nextBtn.classList.add("hidden");
+
+  const xpPoints = q.level === "agosarat" ? 25 : q.level === "segur" ? 15 : 10;
+
+  q.options.forEach((optText, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.textContent = optText;
+    btn.addEventListener("click", () => {
+      optsEl.querySelectorAll(".option-btn").forEach((b) => (b.disabled = true));
+      if (idx === q.correct) {
+        btn.classList.add("correct");
+        fbEl.className = "feedback-box ok";
+        fbEl.innerHTML = `<strong>✊ Argument pel Bé Comú Correcte! (+${xpPoints} XP)</strong><br>${q.explanation}`;
+        addScore(xpPoints);
+      } else {
+        btn.classList.add("wrong");
+        optsEl.querySelectorAll(".option-btn")[q.correct].classList.add("correct");
+        fbEl.className = "feedback-box err";
+        fbEl.innerHTML = `<strong>💡 Pensa en el bé de tots i totes:</strong><br>${q.explanation}`;
+      }
+      nextBtn.classList.remove("hidden");
+    });
+    optsEl.appendChild(btn);
+  });
+}
+
+document.getElementById("fr-next-btn")?.addEventListener("click", () => {
+  frQuestionIndex = (frQuestionIndex + 1) % filteredFranceQuestions.length;
+  renderFranceQuestion();
+});
+
+function updateFranceManifesto() {
+  const outEl = document.getElementById("fr-manifesto-output");
+  if (!outEl) return;
+
+  const checked = Array.from(document.querySelectorAll("#fr-manifesto-checks input:checked")).map((i) => i.value);
+  if (checked.length === 0) {
+    outEl.innerHTML = "<em>Marqueu almenys una proposta per generar el compromís educatiu del vostre partit.</em>";
+    return;
+  }
+
+  const listHtml = checked.map((item) => `<li>✅ ${item}</li>`).join("");
+  outEl.innerHTML = `
+    <strong>📜 Compromís Educatiu del nostre Partit (inspirat en els estudiants de França per a la millora de tots i totes):</strong>
+    <ul style="margin-top:0.5rem; padding-left:1.2rem; font-size:0.9rem">
+      ${listHtml}
+    </ul>
+  `;
+}
+
 // Inicialització global
 window.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
@@ -846,5 +958,6 @@ window.addEventListener("DOMContentLoaded", () => {
   renderPartiesSection();
   updatePosterPreview();
   initPactometre();
+  updateFranceManifesto();
   setGlobalDuaLevel("insegur"); // Comença per defecte en el mode més accessible i guiat
 });

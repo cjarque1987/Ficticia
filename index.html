@@ -57,11 +57,12 @@
     <!-- Navegació per Pestanyes -->
     <nav class="main-nav container" aria-label="Seccions del laboratori">
       <button class="nav-tab active" data-tab="inici">🏠 1. Guia del Projecte</button>
-      <button class="nav-tab" data-tab="partits">🎨 2. Partits, Coalicions i Logos 2026</button>
-      <button class="nav-tab" data-tab="joc-campanya">🎯 3. Joc de Campanyes i Cartell</button>
-      <button class="nav-tab" data-tab="simuladors">📊 4. Pactòmetre i Llei d'Hondt</button>
-      <button class="nav-tab" data-tab="actualitat-jocs">⚡ 5. Trivial i Fake News</button>
-      <button class="nav-tab" data-tab="diccionari">📖 6. Diccionari Visual</button>
+      <button class="nav-tab" data-tab="partits">🎨 2. Partits i Coalicions 2026</button>
+      <button class="nav-tab" data-tab="franca">✊ 3. França: Estudiants en Lluita</button>
+      <button class="nav-tab" data-tab="joc-campanya">🎯 4. Joc de Campanyes i Cartell</button>
+      <button class="nav-tab" data-tab="simuladors">📊 5. Pactòmetre i Llei d'Hondt</button>
+      <button class="nav-tab" data-tab="actualitat-jocs">⚡ 6. Trivial i Fake News</button>
+      <button class="nav-tab" data-tab="diccionari">📖 7. Diccionari Visual</button>
     </nav>
   </header>
 
@@ -76,7 +77,8 @@
             Aquest mes de novembre de 2026 se celebren eleccions generals a Espanya amb un <strong>panorama polític molt mogut i noves coalicions</strong>. Utilitzeu el selector de dalt (<strong>🌱 Insegur, 🛡️ Segur o 🚀 Agosarat</strong>) per adaptar la web i els jocs al vostre ritme!
           </p>
           <div class="hero-actions">
-            <button class="btn btn-primary" onclick="switchTab('partits')">Veure els Nous Partits i Logos 2026 →</button>
+            <button class="btn btn-primary" onclick="switchTab('partits')">Veure Nous Partits 2026 →</button>
+            <button class="btn btn-secondary" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a" onclick="switchTab('franca')">✊ Nou: Joc Mobilitzacions a França</button>
             <button class="btn btn-secondary" onclick="switchTab('joc-campanya')">Jugar per Nivells (🌱 / 🛡️ / 🚀)</button>
           </div>
         </div>
@@ -223,7 +225,74 @@
       </div>
     </section>
 
-    <!-- SECCIÓ 3: JOC DE CAMPANYES MULTINIVELL + SIMULADOR DE CARTELL -->
+    <!-- NOVA SECCIÓ: FRANÇA 2026 · MOBILITZACIONS ESTUDIANTILS I BÉ COMÚ -->
+    <section id="tab-franca" class="tab-section">
+      <div class="section-header">
+        <h2>✊ França 2026: Les Mobilitzacions Estudiantils i la Millora per a Tots i Totes</h2>
+        <p>Com el que passa als instituts (<em>lycées</em>) de França ens ajuda a entendre que defensar l'educació pública és defensar el futur de tota la societat.</p>
+      </div>
+
+      <!-- Explicació adaptada al nivell DUA -->
+      <div class="card-panel france-hero-panel">
+        <div id="france-dua-intro" class="dua-highlight-callout" style="margin-bottom:1.25rem"></div>
+        <h3>🤝 Els 4 grans arguments dels estudiants francesos: per què ens milloren a tots i totes?</h3>
+        <div class="issues-grid" id="france-pillars-grid" style="margin-top:1rem; margin-bottom:0"></div>
+      </div>
+
+      <!-- JOC INTERACTIU DE FRANÇA (MULTINIVELL DUA) -->
+      <div class="section-header">
+        <h3>🎮 Joc Multinivell: «Assemblea d'Estudiants a França: Arguments per al Bé Comú!»</h3>
+        <p>Poseu-vos a la pell dels estudiants de 15 anys als instituts de França i escolliu l'argument que defensa la millora col·lectiva per a tothom:</p>
+      </div>
+
+      <div class="game-mode-bar" id="france-level-bar">
+        <button class="mode-btn active" data-frlevel="insegur" onclick="setFranceGameLevel('insegur')">🌱 Nivell Insegur (Empatia i Bé Comú)</button>
+        <button class="mode-btn" data-frlevel="segur" onclick="setFranceGameLevel('segur')">🛡️ Nivell Segur (Arguments al Debat)</button>
+        <button class="mode-btn" data-frlevel="agosarat" onclick="setFranceGameLevel('agosarat')">🚀 Nivell Agosarat (De la Protesta a la Llei)</button>
+        <button class="mode-btn" data-frlevel="all" onclick="setFranceGameLevel('all')">🌟 Tots els reptes (8)</button>
+      </div>
+
+      <div class="game-container card-panel" id="france-game-card">
+        <div class="game-top-bar">
+          <span id="fr-badge" class="pill-tag">🌱 Nivell Insegur</span>
+          <span id="fr-progress" class="progress-text">Situació 1 de 3</span>
+        </div>
+        <div id="fr-situation" class="visual-hint-box" style="background:#eff6ff; border-left-color:#2563eb; color:#1e3a8a"></div>
+        <h3 id="fr-question" class="game-question-title">Carregant situació...</h3>
+        <div id="fr-options" class="options-list"></div>
+        <div id="fr-feedback" class="feedback-box hidden"></div>
+        <div class="game-footer">
+          <button id="fr-next-btn" class="btn btn-primary hidden">Següent Situació →</button>
+        </div>
+      </div>
+
+      <!-- Mini-Constructor: Del Megàfon de França al Programa del vostre Partit -->
+      <div class="card-panel">
+        <h3>📢 Del Megàfon de França al Programa del vostre Partit Polític</h3>
+        <p class="small-muted" style="margin-bottom:1rem">Marqueu quines reivindicacions dels estudiants francesos voleu incloure al programa electoral del vostre partit per millorar la vida de tots i totes:</p>
+        <div class="france-manifesto-checks" id="fr-manifesto-checks">
+          <label class="fr-check-item">
+            <input type="checkbox" value="Cap aula sense docent: substitucions de professors en menys de 48 hores." checked onchange="updateFranceManifesto()" />
+            <span>👩‍🏫 <strong>Substitucions en 48h:</strong> Que cap classe perdi setmanes de temari quan falta un professor/a.</span>
+          </label>
+          <label class="fr-check-item">
+            <input type="checkbox" value="Ràtio màxima de 20-22 alumnes per aula per garantir l'atenció multinivell (DUA)." checked onchange="updateFranceManifesto()" />
+            <span>👥 <strong>Màxim 20-22 alumnes per aula:</strong> Prohibir les aules massificades de 30-35 estudiants.</span>
+          </label>
+          <label class="fr-check-item">
+            <input type="checkbox" value="Pla d'igualtat d'infraestructures i climatització a tots els instituts públics, sense importar el barri." checked onchange="updateFranceManifesto()" />
+            <span>🏫 <strong>Instituts dignes a tots els barris:</strong> Climatització, laboratoris i edificis segurs a totes les zones.</span>
+          </label>
+          <label class="fr-check-item">
+            <input type="checkbox" value="Accés just a la universitat i FP pública amb orientadors i psicòlegs gratuïts a cada centre." onchange="updateFranceManifesto()" />
+            <span>🎓 <strong>Accés just al futur i Salut Mental:</strong> Places públiques garantides d'FP/Universitat i psicòlegs als instituts.</span>
+          </label>
+        </div>
+        <div class="dua-highlight-callout" id="fr-manifesto-output" style="margin-top:1rem; margin-bottom:0; background:#f0fdf4; border-left-color:#16a34a"></div>
+      </div>
+    </section>
+
+    <!-- SECCIÓ 4: JOC DE CAMPANYES MULTINIVELL + SIMULADOR DE CARTELL -->
     <section id="tab-joc-campanya" class="tab-section">
       <div class="section-header">
         <h2>🎯 Joc Multinivell: Caçadors de Campanyes, Logos i Coalicions</h2>

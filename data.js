@@ -173,7 +173,7 @@ const PARTIES_DATA = [
     colorPsychology: "El morat és el color històric de la lluita feminista i simbolitza trencament amb el bipartidisme clàssic.",
     campaignStyle: {
       tone: "Directe, combatiu i centrat a assenyalar grans bancs, fons voltor i elitisme.",
-      socialMedia: " forta presència a X (Twitter), TikTok i Canal Red amb talls d'intervencions molt virals.",
+      socialMedia: "Forta presència a X (Twitter), TikTok i Canal Red amb talls d'intervencions molt virals.",
       keyIssues2026: [
         "Intervenció pública del mercat de l'habitatge i prohibició de compra per fons d'inversió",
         "Impost permanent a la banca, grans elèctriques i grans superfícies",
@@ -367,6 +367,167 @@ const PARTIES_DATA = [
         "Inversions en trens de proximitat, indústria i habitatge públic"
       ]
     }
+  }
+];
+
+// NOU APARTAT: Mobilitzacions Estudiantils a França (Tardor 2026) · Arguments per a la millora de tots i totes
+const FRANCE_MOBILIZATION_INFO = {
+  duaIntro: {
+    insegur: "🌱 <strong>Què passa als instituts de França?</strong> Des de finals de setembre de 2026, milers d'alumnes de secundària (<em>lycéens</em>) de París i de tota França es mobilitzen juntament amb els seus professors i famílies. <strong>No demanen privilegis individuals:</strong> reclamen que l'escola pública tingui prou professors, menys alumnes per classe i edificis dignes perquè <strong>tots i totes</strong> tinguin les mateixes oportunitats.",
+    segur: "🛡️ <strong>Context França 2026:</strong> El moviment va néixer a l'institut <em>Saint-Exupéry de Créteil</em> (perifèria de París) i s'ha estès per tot el país amb el suport dels sindicats docents (SNES-FSU, CGT, Sud Éducation) i les famílies (FCPE). Els estudiants defensen que una educació pública forta, sense aules massificades de 35 alumnes i amb accés just a la universitat (sense l'algoritme excloent de <em>Parcoursup</em>), millora la vida de tota la societat.",
+    agosarat: "🚀 <strong>Anàlisi Política i Social (França 2026):</strong> Les mobilitzacions dels <em>lycées</em> francesos connecten tres eixos que podeu incorporar al vostre partit polític: 1) <strong>Justícia territorial</strong> (acabar amb la bretxa entre instituts del centre ric i de les perifèries o <em>banlieues</em>), 2) <strong>Inversió pública davant retallades pressupostàries</strong> en places docents, i 3) <strong>Dret al futur</strong> davant sistemes de selecció automatitzada com <em>Parcoursup</em> que generen ansietat i desigualtat social."
+  },
+  pillars: [
+    {
+      icon: "👩‍🏫",
+      title: "1. Cap aula sense professor/a",
+      problem: "A molts instituts francesos falten docents i quan un professor agafa la baixa passen setmanes sense substitut.",
+      forAll: "Per què millora a tots i totes? Perquè cap grup d'alumnes es queda enrere ni perd hores d'aprenentatge, visqui al barri que visqui."
+    },
+    {
+      icon: "👥",
+      title: "2. Aules de 20-25 alumnes, no de 35!",
+      problem: "Moltes classes de secundària a França arriben als 32-35 estudiants per aula (massificació).",
+      forAll: "Per què millora a tots i totes? Amb menys ràtio, el professorat pot ajudar qui té més dificultats (model DUA), hi ha menys soroll i tothom aprèn millor."
+    },
+    {
+      icon: "🏫",
+      title: "3. Instituts dignes a tots els barris",
+      problem: "Deteriorament d'edificis escolars (goteres, fred a l'hivern, calor extrema i falta de material), sobretot a les perifèries (banlieues).",
+      forAll: "Per què millora a tots i totes? Garanteix que el codi postal no determini la qualitat de la teva escola ni la teva dignitat."
+    },
+    {
+      icon: "🎓",
+      title: "4. Futur sense algoritmes injustos (Parcoursup)",
+      problem: "A França, la plataforma digital 'Parcoursup' tria qui entra a la universitat o FP amb criteris opacs que penalitzen els instituts de barris treballadors.",
+      forAll: "Per què millora a tots i totes? Redueix l'ansietat als 15-17 anys i assegura que l'esforç de qualsevol estudiant tingui plaça pública garantida."
+    }
+  ]
+};
+
+// Joc Interactiu de França (Multinivell 🌱 Insegur / 🛡️ Segur / 🚀 Agosarat): "Assemblea de Liceu: Arguments per a Tots i Totes"
+const FRANCE_GAME_CHALLENGES = [
+  // 🌱 NIVELL INSEGUR
+  {
+    id: 1,
+    level: "insegur",
+    badge: "🌱 Nivell Insegur · Empatia i Bé Comú",
+    situation: "📍 Institut Saint-Exupéry (Créteil, França): Fa 3 setmanes que falta el professor de matemàtiques i ningú no l'ha substituït. Els alumnes de 15 anys es reuneixen en assemblea.",
+    question: "Quin argument explica millor que la seva protesta busca la millora de TOTS i TOTES?",
+    options: [
+      "«Millor que no vingui cap professor, així tenim hora lliure al pati!»",
+      "«Reclamem un substitut immediat perquè tots els alumnes tenim dret a aprendre i a arribar preparats als exàmens finals, sense importar de quin barri som.»",
+      "«Que posin professor només als alumnes que treuen un 10.»"
+    ],
+    correct: 1,
+    explanation: "Exacte! Les mobilitzacions estudiantils a França reclamen que no es perdin hores de classe: volen més educació i de més qualitat per a tothom, especialment per a qui no es pot pagar classes particulars a la tarda."
+  },
+  {
+    id: 2,
+    level: "insegur",
+    badge: "🌱 Nivell Insegur · Aules sense Massificació",
+    situation: "📍 En un liceu de París hi ha 35 alumnes dins d'una mateixa aula. Quan algú no entén un exercici, la professora no dona l'abast.",
+    question: "Per què demanar menys alumnes per classe (baixar ràtios) beneficia tant l'alumnat com el professorat?",
+    options: [
+      "Perquè amb menys alumnes per aula el professorat pot atendre els diferents ritmes (Insegur, Segur, Agosarat), hi ha millor convivència i ningú es queda enrere.",
+      "Perquè així es tanquen la meitat dels instituts.",
+      "Només beneficia els alumnes que seuen a primera fila."
+    ],
+    correct: 0,
+    explanation: "Molt bé! Baixar el nombre d'alumnes per aula és una mesura de justícia educativa: millora l'atenció personalitzada, la salut laboral dels docents i el clima de convivència."
+  },
+  {
+    id: 3,
+    level: "insegur",
+    badge: "🌱 Nivell Insegur · Comunitat Unida",
+    situation: "📍 A les manifestacions d'octubre de 2026 a França, al costat dels estudiants de 15 anys també hi van els sindicats de professors i les associacions de famílies (FCPE).",
+    question: "Per què s'uneixen estudiants, docents i famílies en una mateixa mobilització?",
+    options: [
+      "Perquè s'han equivocat de carrer.",
+      "Perquè l'educació pública és un bé comú: quan es milloren les aules i es contracten més docents, hi guanyen els joves, les famílies i els treballadors de l'ensenyament.",
+      "Perquè els pares volen fer els exàmens en lloc dels fills."
+    ],
+    correct: 1,
+    explanation: "Genial! Quan una reivindicació és justa i pensa en el bé comú, uneix tota la comunitat educativa (alumnat, professorat i famílies)."
+  },
+
+  // 🛡️ NIVELL SEGUR
+  {
+    id: 4,
+    level: "segur",
+    badge: "🛡️ Nivell Segur · Desmuntar Prejudicis",
+    situation: "📺 En una tertúlia de televisió, un comentarista diu: «Els estudiants francesos que fan vaga o bloquejos només busquen una excusa per no estudiar i fer festa.»",
+    question: "Com respondries com a portaveu estudiantil amb un argument rigorós i pensat per al bé comú?",
+    options: [
+      "Insultant el comentarista per les xarxes socials.",
+      "Explicant amb dades que ens mobilitzem precisament perquè VOLEM estudiar en condicions dignes: contra la supressió de places de professors, contra aules de 35 alumnes i per edificis segurs.",
+      "Donant-li la raó i dient que no ens importa l'escola.",
+      "Demanant que s'eliminin totes les vacances."
+    ],
+    correct: 1,
+    explanation: "Molt bona resposta de debat! La millor manera de desmuntar un tòpic és demostrar que la mobilització estudiantil defensa el dret a estudiar en igualtat de condicions."
+  },
+  {
+    id: 5,
+    level: "segur",
+    badge: "🛡️ Nivell Segur · Igualtat Territorial (Banlieues)",
+    situation: "📍 Els estudiants dels barris perifèrics (*banlieues*) denuncien que els seus instituts tenen pitjors instal·lacions i menys recursos que els instituts d'elit del centre de París.",
+    question: "Per què defensar la igualtat entre instituts de diferents barris és un argument per a la millora de tota la societat?",
+    options: [
+      "Perquè una democràcia real necessita igualtat d'oportunitats: el talent és a tots els barris, i si l'escola pública compensa les desigualtats, tota la societat avança més unida i justa.",
+      "Perquè els instituts del centre de París han de tancar.",
+      "Perquè només han d'estudiar els qui viuen als afores.",
+      "No té cap relació amb la política."
+    ],
+    correct: 0,
+    explanation: "Exacte! L'escola pública és l'ascensor social: garantir que qualsevol jove de 15 anys tingui els mateixos laboratoris, docents i orientació evita la fractura social."
+  },
+  {
+    id: 6,
+    level: "segur",
+    badge: "🛡️ Nivell Segur · El cas Parcoursup i la Salut Mental",
+    situation: "💻 A França, l'algoritme *Parcoursup* decideix l'admissió a la universitat i cicles superiors, generant una angoixa enorme als estudiants de secundària.",
+    question: "Quina alternativa proposen els moviments estudiantils per cuidar la salut mental i la justícia educativa?",
+    options: [
+      "Que s'entri a la universitat per sorteig de loteria.",
+      "Crear més places públiques d'universitat i FP, fer transparents els criteris i reforçar els orientadors i psicòlegs als instituts perquè cap jove quedi exclòs.",
+      "Prohibir l'accés a la universitat.",
+      "Que només puguin estudiar els qui paguin una universitat privada."
+    ],
+    correct: 1,
+    explanation: "Molt bé! En lloc de fer competir els adolescents amb un algoritme opac, la solució col·lectiva és ampliar places públiques i acompanyar emocionalment i acadèmicament l'alumnat."
+  },
+
+  // 🚀 NIVELL AGOSARAT
+  {
+    id: 7,
+    level: "agosarat",
+    badge: "🚀 Nivell Agosarat · De la Protesta al Programa Electoral",
+    situation: "🏛️ Sou els estrategs d'un partit polític que es presenta el novembre de 2026 i voleu recollir el fons de les mobilitzacions estudiantils de França en una proposta de llei.",
+    question: "Quina d'aquestes propostes de programa electoral transforma millor les demandes estudiantils en una política pública rigorosa?",
+    options: [
+      "Prometre aprovar tothom sense fer cap classe ni cap projecte.",
+      "Llei d'Inversió Educativa del 5% del PIB: ràtio màxima per llei de 20-22 alumnes a l'ESO/Batxillerat, cobertura de baixes docents en 48h i Pla de Rehabilitació Climàtica dels instituts públics.",
+      "Tancar els instituts públics i donar un xec privat de 100 euros.",
+      "Prohibir que els estudiants puguin reunir-se o opinar sobre educació."
+    ],
+    correct: 1,
+    explanation: "Brillant! Així és com la política transforma el malestar social i les mobilitzacions juvenils en lleis concretes amb pressupost (5% del PIB), ràtios màximes i drets garantits."
+  },
+  {
+    id: 8,
+    level: "agosarat",
+    badge: "🚀 Nivell Agosarat · Dret de Participació Juvenil",
+    situation: "📣 Durant les mobilitzacions a França, el Govern ha hagut d'obrir taules de diàleg amb les organitzacions juvenils i sindicals per escoltar les seves propostes.",
+    question: "Quina lliçó política ens mostra això sobre la participació dels joves de 15 anys en democràcia?",
+    options: [
+      "Que els joves de 15 anys no tenen res a dir fins que en facin 30.",
+      "Que la democràcia no és només votar cada 4 anys: quan l'alumnat s'organitza amb arguments sòlids, pacífics i pensant en el bé comú, aconsegueix posar l'educació pública al centre de l'agenda política.",
+      "Que només serveixen les protestes si no hi ha cap proposta darrere.",
+      "Que els partits polítics no han d'escoltar mai els estudiants."
+    ],
+    correct: 1,
+    explanation: "Excel·lent reflexió final! Organitzar-se, argumentar i defensar serveis públics de qualitat per a tothom és una de les formes més nobles de fer política democràtica."
   }
 ];
 
@@ -800,7 +961,7 @@ const DICTIONARY_TERMS = [
   {
     term: "Programa Electoral",
     category: "Campanya i Comunicació",
-    simpleDef: "🌱 El llista de propostes i lleis que un partit promet aprovar si guanya.",
+    simpleDef: "🌱 La llista de propostes i lleis que un partit promet aprovar si guanya.",
     definition: "Document on cada partit explica què vol fer en habitatge, educació, economia o clima i com ho pensa finançar.",
     example2026: "Al vostre projecte de 4t d'ESO, el programa ha d'incloure propostes realistes per als joves."
   },
